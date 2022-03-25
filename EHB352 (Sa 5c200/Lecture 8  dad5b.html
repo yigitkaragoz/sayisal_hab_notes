@@ -1,0 +1,698 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lecture 8 (22.04.21) [Uyumlu Süzgeç, İlişkili Alıcı]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="dad5b670-f290-4e56-bebf-675111b66ff8" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">8️⃣</span></div><h1 class="page-title">Lecture 8 (22.04.21) [Uyumlu Süzgeç, İlişkili Alıcı]</h1></header><div class="page-body"><nav id="6826f56e-9fd1-491c-85f3-d07713adc77a" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#61732763-cbe5-41be-b8f1-f86cfd51b915">Uyumlu Süzgeç (Matched Filter)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b906dac6-0c62-4eff-a293-0809b535dd7c">Alıcıdaki g_R(t) ve vericideki g_T(t)&#x27;yi nasıl seçmeliyiz ki gürültünün etkisi az olur?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#eb2bc077-3c5c-4750-a389-79f4289293cc">Cauchy-Schwarz Eşitsizliği</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9dfe6ce8-64a0-4108-8e3a-45eb2be4bcab">Örnek 1:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#26356e63-8551-4451-8923-6ebc8be279a2">Örnek 2:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#77c5df71-36ae-4d6b-b222-3bbff0312762">Örnek 3:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f567494c-eed1-426f-8350-f7ce99d55ef8">NOT:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6230366b-f95b-4f33-8071-9c5c2d825f4a">Örnek Soru 1:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#82a50ddc-e284-499d-9370-7905b3057de1">Örnek Soru 2:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e95dfb13-67fb-459f-b240-6da13b43c700">İlişkili Alıcı (Correlator Receiver)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f81b9c1e-9390-4ef5-892b-354454123d94">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fc6c4d1d-f2c2-49cb-8501-75cca5c6ad9b">Uygulama</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#720fc716-0556-4f55-b12a-deb6fb10eb2e">1.</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#60b3ea64-96d5-40fc-87df-33df50dbd20b">a)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#621d0004-a907-4af2-aa1d-e3677b021dab">b)</a></div></nav><h2 id="61732763-cbe5-41be-b8f1-f86cfd51b915" class="">Uyumlu Süzgeç (Matched Filter)</h2><figure id="ba823fc0-0ab6-4449-acc1-39d5152811d2" class="image"><a href="Lecture%208%20%20dad5b/Untitled.png"><img style="width:489px" src="Lecture%208%20%20dad5b/Untitled.png"/></a></figure><ul id="d2f3cb8c-9ee6-4026-a8f2-f696332ac1f0" class="bulleted-list"><li style="list-style-type:disc">ISI&#x27;dan kurtulmuş olsak da gürültünün bozucu etkisi devam etmekte.<ul id="2f0f18b8-1017-4ef4-837c-08754f8831e8" class="bulleted-list"><li style="list-style-type:circle">Peki bundan nasıl kurtuluruz?</li></ul></li></ul><p id="ff26801b-b15a-4bfe-9d2b-835fac4b4ef8" class="">
+</p><figure id="3f132ca1-5b35-402e-bb3a-c9a4e864ce9d" class="image"><a href="Lecture%208%20%20dad5b/Untitled%201.png"><img style="width:753px" src="Lecture%208%20%20dad5b/Untitled%201.png"/></a></figure><ul id="f89a77d1-97b9-4280-a7c6-1be86d75dfb2" class="bulleted-list"><li style="list-style-type:disc">Bu durumlarda kanalın transfer fonksiyonu 1 olduğunu varsayıyoruz. (ya da dengelenmiş olabilir.)</li></ul><p id="1cf91ef6-e087-4de7-a67c-e853fb56be2a" class="">
+</p><figure id="5a40f91a-3495-48f2-9504-1d89791355b4" class="image"><a href="Lecture%208%20%20dad5b/Untitled%202.png"><img style="width:879px" src="Lecture%208%20%20dad5b/Untitled%202.png"/></a></figure><ul id="ea64a8e2-14b1-408d-a188-38d9461304ab" class="bulleted-list"><li style="list-style-type:disc">s(t) yukarıda belirtildiği gibi her darbeye denk düşen fonksiyonlar bütünüdür.</li></ul><p id="ffbc523e-71f0-4ac5-9865-f1cd74ed5e41" class="">
+</p><figure id="2d6e89a1-16cc-4a7e-a734-3f87d1332822" class="image"><a href="Lecture%208%20%20dad5b/Untitled%203.png"><img style="width:638px" src="Lecture%208%20%20dad5b/Untitled%203.png"/></a></figure><ul id="a9653db1-075c-40aa-b30a-141871c7c4c7" class="bulleted-list"><li style="list-style-type:disc">Alıcının görevi r(t_0)&#x27;ye bakarak a_n&#x27;nin ne olduğunu bulmaktır.</li></ul><p id="152b2587-8e36-4556-98ab-bf9071e413d2" class="">
+</p><h3 id="b906dac6-0c62-4eff-a293-0809b535dd7c" class="">Alıcıdaki g_R(t) ve vericideki g_T(t)&#x27;yi nasıl seçmeliyiz ki gürültünün etkisi az olur?</h3><ul id="65365d45-0124-4316-9200-cb8d226da656" class="bulleted-list"><li style="list-style-type:disc">Bu durum için en iyi süzgeç nedir?</li></ul><p id="aa211dc0-8cdb-48f0-982f-f35104fe7a4d" class="">
+</p><figure id="18a367d5-1834-453f-98ec-99991a869b28" class="image"><a href="Lecture%208%20%20dad5b/Untitled%204.png"><img style="width:837px" src="Lecture%208%20%20dad5b/Untitled%204.png"/></a></figure><ul id="b78ca416-6f8b-4c81-9c93-b2437250da2c" class="bulleted-list"><li style="list-style-type:disc">eta bir rastlantı değişkeni olduğu için beklenen değeri alınır.</li></ul><ul id="ae4a65f7-fb30-4e55-991f-6477c5d07f46" class="bulleted-list"><li style="list-style-type:disc">Bu durumda artık SNR&#x27;ı maksimum yapacak süzgeci arayacağız.<ul id="5157e010-dcd8-444f-9ad0-b2b2d7abcb5d" class="bulleted-list"><li style="list-style-type:circle">Böylelikle Karar Devresinin hatası minimum olacaktır.</li></ul></li></ul><p id="d665b5dc-48d6-45bf-9a85-3ea40b5f8146" class="">
+</p><figure id="83a015c7-fa43-40bc-9f33-6f0b2a109969" class="image"><a href="Lecture%208%20%20dad5b/Untitled%205.png"><img style="width:642px" src="Lecture%208%20%20dad5b/Untitled%205.png"/></a></figure><ul id="c968eea2-443b-4cc6-a5e8-d15754677ff9" class="bulleted-list"><li style="list-style-type:disc">~s(t_0)&#x27;nin fonksiyonu bulundu.</li></ul><figure id="cdfcce6c-37c1-40b4-844e-ff9f7e2d7be3" class="image"><a href="Lecture%208%20%20dad5b/Untitled%206.png"><img style="width:528px" src="Lecture%208%20%20dad5b/Untitled%206.png"/></a></figure><ul id="8defc994-6e4e-4807-b61f-a838c66ad8e1" class="bulleted-list"><li style="list-style-type:disc">Güç spektral yoğunluğunun transfer fonksiyonu sonucu değişimi bu şekildedir.</li></ul><p id="96d584b5-452c-403e-90ab-e6ac142b44e5" class="">
+</p><figure id="7454b52c-7bf5-4e16-8d54-15a1f54c0fc5" class="image"><a href="Lecture%208%20%20dad5b/Untitled%207.png"><img style="width:903px" src="Lecture%208%20%20dad5b/Untitled%207.png"/></a></figure><ul id="0eae7267-5a6b-45f5-9263-fd2526b07c1d" class="bulleted-list"><li style="list-style-type:disc">SNR için paydadaki ifadeyi de bulduk.</li></ul><p id="5d3f31f6-2bdb-4cf5-b9b7-ba14086a5a82" class="">
+</p><figure id="f57953ee-b036-4c57-8ecb-84bc18b32082" class="image"><a href="Lecture%208%20%20dad5b/Untitled%208.png"><img style="width:742px" src="Lecture%208%20%20dad5b/Untitled%208.png"/></a></figure><ul id="1e1e2793-798d-4c3e-828d-81b174605427" class="bulleted-list"><li style="list-style-type:disc">Sonuç olarak SNR ↑.</li></ul><p id="387f03c5-c9d1-4baf-8f54-4bba870f5c09" class="">
+</p><h3 id="eb2bc077-3c5c-4750-a389-79f4289293cc" class="">Cauchy-Schwarz Eşitsizliği</h3><figure id="82f4ad5b-b5bc-48da-94ad-c37e737f137c" class="image"><a href="Lecture%208%20%20dad5b/Untitled%209.png"><img style="width:825px" src="Lecture%208%20%20dad5b/Untitled%209.png"/></a></figure><ul id="b7a721ac-813f-4751-ae5e-800cd9721fc2" class="bulleted-list"><li style="list-style-type:disc">Bu eşitsizlik kullanılarak SNR&#x27;a üst sınır belirleyeceğiz.</li></ul><ul id="a2d0bd82-cb31-4d66-9256-d033e38f425d" class="bulleted-list"><li style="list-style-type:disc">Eşitsizlikte eşitliği sağlayan an benim için SNR&#x27;ın maks olduğu durum olacaktır.<ul id="e6055c0f-0981-4cc4-980e-644b345099c7" class="bulleted-list"><li style="list-style-type:circle">Biz zaten SNR&#x27;ın maksimum halini istiyoruz.</li></ul></li></ul><p id="c0b798c1-3e57-4710-b1f9-359bb40a32df" class="">
+</p><figure id="f46c4294-096b-43eb-9335-23a1caf0c18c" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2010.png"><img style="width:1762px" src="Lecture%208%20%20dad5b/Untitled%2010.png"/></a></figure><ul id="ac2ea296-b9e5-4ccd-a527-205b069982ab" class="bulleted-list"><li style="list-style-type:disc">Bu sayede alıcıdaki transfer fonksiyonu G_R(f) bulundu.</li></ul><ul id="1d99b13b-caff-4a6c-b738-a69b9045ad86" class="bulleted-list"><li style="list-style-type:disc">SNR ifadesinde G_R(f) hem payda hem paydada olduğu için sadeleşme olacaktır.<ul id="1e5a5cab-23a7-44a9-b870-19ba91112658" class="bulleted-list"><li style="list-style-type:circle">Bu yüzden C katsayısı 1 olarak kabul edilebilir.</li></ul></li></ul><p id="cf4d38ed-e51a-4115-a358-d07f9a282bd7" class="">
+</p><p id="7273c40d-0564-47e8-85eb-ebf8f8889dfd" class="">
+</p><figure id="5242d0d5-b518-4121-9b28-5bf5491957c6" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2011.png"><img style="width:884px" src="Lecture%208%20%20dad5b/Untitled%2011.png"/></a></figure><ul id="fad0cdd2-acf7-4b20-b4b4-4862bc697813" class="bulleted-list"><li style="list-style-type:disc">analiz yaptığımız aralıkta <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mn>0</mn></msub><mo>=</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">t_0=T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span><span>﻿</span></span> seçilerek işlem yapılır.</li></ul><ul id="edcb4b89-aca8-43dd-91e6-eb5a3be93e02" class="bulleted-list"><li style="list-style-type:disc">Bu şekilde uyumlu süzgeçin transfer fonksiyonu bulundu:</li></ul><figure id="83e3c665-b14e-4713-988e-09a6e8f6fecf" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2012.png"><img style="width:639px" src="Lecture%208%20%20dad5b/Untitled%2012.png"/></a></figure><p id="6702c086-c6eb-4853-98e5-b782833a0e9a" class="">
+</p><figure id="e216c9c0-2485-4ebe-ba3a-0fbf8def0964" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2013.png"><img style="width:584px" src="Lecture%208%20%20dad5b/Untitled%2013.png"/></a></figure><ul id="36b7106c-d329-4b05-8b4b-b8abb389e7de" class="bulleted-list"><li style="list-style-type:disc">g_T(t) fonksiyonu s(t)&#x27;ye bağlı.</li></ul><ul id="7e0f5dbf-668c-490a-a289-1f86e09e93d2" class="bulleted-list"><li style="list-style-type:disc">Aynı zamanda uyumlu süzgeç modelinde g_R(t) de s(t)&#x27;ye bağlı.<ul id="49db9410-39e7-421e-866b-99369a9f6a8b" class="bulleted-list"><li style="list-style-type:circle">ama g_r(t) zamanda s(t)&#x27;nin zamanda ötelemeli hali olduğu için frekans domaininde bir etkisi yoktur.</li></ul><ul id="2b46db43-c925-4edd-9c69-afc68ae020f1" class="bulleted-list"><li style="list-style-type:circle">Bu yüzden g_T(t) RRC ise g_R(t) de RRC olur.<ul id="0313c3b8-b53e-4564-a8c7-4db2e9d0bb94" class="bulleted-list"><li style="list-style-type:square">Uyumlu süzgeç bunu engellemez.</li></ul></li></ul></li></ul><p id="542b7747-4f32-49b8-b647-3a361745c9cd" class="">
+</p><h3 id="9dfe6ce8-64a0-4108-8e3a-45eb2be4bcab" class="block-color-teal_background">Örnek 1:</h3><figure id="88d8429f-79d9-44f1-858a-46bae238360b" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2014.png"><img style="width:897px" src="Lecture%208%20%20dad5b/Untitled%2014.png"/></a></figure><ul id="12862931-28f2-4f18-8ba2-8b47ed3436f4" class="bulleted-list"><li style="list-style-type:disc">Uyumlu Süzgeç kullanılırsa, karar devresi girişindeki maksimum SNR ne olur?</li></ul><p id="140d3f92-7be6-4985-bac3-cb64b8fa30c2" class="">
+</p><figure id="b392ff18-a712-477e-a150-d27cb76ed48d" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2015.png"><img style="width:941px" src="Lecture%208%20%20dad5b/Untitled%2015.png"/></a></figure><ul id="f1d75352-f731-4d09-874e-553758fe3f6a" class="bulleted-list"><li style="list-style-type:disc">SNR değerini Cauchy Eşitsizliğini de kullanarak yeniden yazıyorum.<ul id="7b70d33a-958d-4e65-a2f1-ceaf71e041ce" class="bulleted-list"><li style="list-style-type:circle">Parseval Teoreminden bunun bir enerji denklemi olduğu bulunuyor.</li></ul></li></ul><p id="962c04b2-d08a-44de-9131-56fb56c9ec62" class="">
+</p><h3 id="26356e63-8551-4451-8923-6ebc8be279a2" class="block-color-teal_background">Örnek 2:</h3><figure id="861deb4a-00c8-4d62-bb46-72b0527357b4" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2016.png"><img style="width:908px" src="Lecture%208%20%20dad5b/Untitled%2016.png"/></a></figure><ul id="106bfac6-6dcf-4833-9625-7990b7b8fee8" class="bulleted-list"><li style="list-style-type:disc">Gürültü olmasa, uyumlu süzgecin çıkışındaki örneklenmiş işaretin genlik değeri ne olur?</li></ul><p id="1db4f398-44ef-4b26-bd4a-9e29e979d1c6" class="">
+</p><figure id="dd24301b-c1c8-4a6a-872e-1f83c9450d1e" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2017.png"><img style="width:888px" src="Lecture%208%20%20dad5b/Untitled%2017.png"/></a></figure><ul id="a61adff2-76f8-49a4-835c-b905505e095c" class="bulleted-list"><li style="list-style-type:disc">Örnek anındaki genlik değeri, gürültü yokken, uyumlu olan işaretin enerjisidir.</li></ul><p id="a611d6c7-9dc5-4078-8636-44b010bed247" class="">
+</p><h3 id="77c5df71-36ae-4d6b-b222-3bbff0312762" class="block-color-teal_background">Örnek 3:</h3><figure id="332dd5d9-836e-459c-8836-95a599700e37" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2018.png"><img style="width:830px" src="Lecture%208%20%20dad5b/Untitled%2018.png"/></a></figure><ul id="7e4987c9-967b-4916-a4bf-e7d9ac799af5" class="bulleted-list"><li style="list-style-type:disc">Uyumlu süzgeç çıkışındaki örneklenmiş gürültünün ortalama gücü nedir?</li></ul><p id="a557a703-f527-41a5-bcbc-4c688e68c94d" class="">
+</p><figure id="d9e647a6-f92a-4698-ab42-bc153a19998e" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2019.png"><img style="width:705px" src="Lecture%208%20%20dad5b/Untitled%2019.png"/></a></figure><ul id="f4c90188-74d7-40fd-8bf0-14de17e754a1" class="bulleted-list"><li style="list-style-type:disc">Uyumlu süzgeç çıkışındaki gürültünün ifadesini bulduk.</li></ul><figure id="8d9b7c11-2803-4e79-9e0c-016a1c167687" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2020.png"><img style="width:817px" src="Lecture%208%20%20dad5b/Untitled%2020.png"/></a></figure><ul id="6aebc9e2-177f-41d2-93a6-d6dc96e265bd" class="bulleted-list"><li style="list-style-type:disc">Yukarıdaki <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi></mrow><annotation encoding="application/x-tex">\eta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">η</span></span></span></span></span><span>﻿</span></span> tanımını kullanarak N&#x27;yi bulmaya çalışıyoruz.</li></ul><p id="49e3cbda-e8e7-4e57-92d8-0d634371c57a" class="">
+</p><figure id="2d1656b3-bac5-4895-9fe5-78683b34b5bd" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2021.png"><img style="width:624px" src="Lecture%208%20%20dad5b/Untitled%2021.png"/></a></figure><figure id="5528e76c-1060-4d15-a4c9-07fed8134612" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2022.png"><img style="width:714px" src="Lecture%208%20%20dad5b/Untitled%2022.png"/></a></figure><ul id="079f7cea-ba84-4cf9-87b1-eb877981c4ab" class="bulleted-list"><li style="list-style-type:disc">Güç <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>N</mi><mn>0</mn></msub><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{N_0}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.233431em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8884309999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4101em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31731428571428577em;"><span style="top:-2.357em;margin-left:-0.10903em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span>*[uyumlu olan işaretin enerjisi] çıkar.</li></ul><p id="552e0e5f-0d46-4761-b4ec-aee908f48575" class="">
+</p><h3 id="f567494c-eed1-426f-8350-f7ce99d55ef8" class="">NOT:</h3><figure id="1ac095f6-6841-4ad6-b35a-36b3b6942e61" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2023.png"><img style="width:918px" src="Lecture%208%20%20dad5b/Untitled%2023.png"/></a></figure><p id="8131ef60-7590-4e4a-93d5-e6cdb583b233" class="">
+</p><h3 id="6230366b-f95b-4f33-8071-9c5c2d825f4a" class="">Örnek Soru 1:</h3><figure id="77b36f79-7f4b-4a98-9126-cc7982fbfc95" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2024.png"><img style="width:876px" src="Lecture%208%20%20dad5b/Untitled%2024.png"/></a></figure><figure id="8bbe16b3-4ed1-4bcf-871f-0f286d47e010" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2025.png"><img style="width:831px" src="Lecture%208%20%20dad5b/Untitled%2025.png"/></a></figure><figure id="33eac536-b682-481c-89c8-78ddffbd9e0d" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2026.png"><img style="width:485px" src="Lecture%208%20%20dad5b/Untitled%2026.png"/></a></figure><figure id="701982bf-a1cb-4dbe-91ee-588ead6f9528" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2027.png"><img style="width:416px" src="Lecture%208%20%20dad5b/Untitled%2027.png"/></a></figure><p id="eb0ac5c3-ff34-4694-9957-c1e038c70709" class="">
+</p><h3 id="82a50ddc-e284-499d-9370-7905b3057de1" class="">Örnek Soru 2:</h3><figure id="ab492430-4a24-47d8-8134-6cede2946260" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2028.png"><img style="width:876px" src="Lecture%208%20%20dad5b/Untitled%2028.png"/></a></figure><ul id="32ebbd47-7eaa-4f30-bdda-fa8ef33591d0" class="bulleted-list"><li style="list-style-type:disc">s_1(t)=g_T(t) seçilerek a_n=1 kabul edilmiştir.</li></ul><p id="c2e8ffa6-2e10-4fa9-8069-c93b1b6c7263" class="">
+</p><ul id="e77692a1-d5f5-4734-abee-72abb7210bec" class="bulleted-list"><li style="list-style-type:disc">a)</li></ul><figure id="9dc70019-c364-4e64-94d0-aef60803b29b" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2029.png"><img style="width:804px" src="Lecture%208%20%20dad5b/Untitled%2029.png"/></a></figure><figure id="6fec2fd7-6b28-4668-8014-7f9009e8544b" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2030.png"><img style="width:393px" src="Lecture%208%20%20dad5b/Untitled%2030.png"/></a></figure><p id="c27a27a3-4c0c-419d-9af3-1c22e22555ee" class="">
+</p><ul id="b659b6f1-1500-4839-bd4e-4ad819942375" class="bulleted-list"><li style="list-style-type:disc">b)</li></ul><figure id="e546de4f-6f2f-485e-8d1b-c9dee4c1a909" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2031.png"><img style="width:849px" src="Lecture%208%20%20dad5b/Untitled%2031.png"/></a></figure><p id="7af8a8d7-04bd-4a13-864a-492d5023cda0" class="">
+</p><ul id="441c66cc-bf51-4093-8978-17c793e756c6" class="bulleted-list"><li style="list-style-type:disc">c) ve d)</li></ul><figure id="b94f347f-5121-402a-a449-8e2afbb91508" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2032.png"><img style="width:827px" src="Lecture%208%20%20dad5b/Untitled%2032.png"/></a></figure><ul id="1cce5891-6558-4426-a627-32f5a8074b97" class="bulleted-list"><li style="list-style-type:disc">c şıkkındaki çözümde:<ul id="63085615-bbcd-4bd3-ae8f-11c4150e014e" class="bulleted-list"><li style="list-style-type:circle">Her T, 2T, 3T, 4T anında sadece o andaki işaret görülmektedir.</li></ul><ul id="87a0c900-f5ec-41b7-b228-19bc48121f66" class="bulleted-list"><li style="list-style-type:circle">Yani sistem Nyquist kriterine uyar. ISI yok.</li></ul></li></ul><ul id="1f3c380a-273c-4dd7-aa13-0cd5a3b324e1" class="bulleted-list"><li style="list-style-type:disc">d için:<ul id="33144ee9-47c2-47ad-a4a9-05451d5251e9" class="bulleted-list"><li style="list-style-type:circle">p0 o andaki örneklemenin genliği</li></ul></li></ul><p id="c0918ad5-2948-4da4-b763-83017eeda240" class="">
+</p><h2 id="e95dfb13-67fb-459f-b240-6da13b43c700" class="">İlişkili Alıcı (Correlator Receiver)</h2><ul id="f729314a-8050-43c5-902b-4929be0ea022" class="bulleted-list"><li style="list-style-type:disc">Uyumlu süzgeçten sonraki başka bir alıcı türü.</li></ul><figure id="4642c111-1192-41a3-9f78-4e1d5beb5b71" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2033.png"><img style="width:803px" src="Lecture%208%20%20dad5b/Untitled%2033.png"/></a></figure><ul id="cb4aee89-b03e-47fd-9aab-9c0f9050bbc7" class="bulleted-list"><li style="list-style-type:disc">Şimdi ise uyumlu süzgeç yerine <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>s</mi><mo>∗</mo></msup><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s^*(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> ile çarpıp integre ediyoruz.</li></ul><ul id="5d203da4-a676-47f6-a416-df90dd430742" class="bulleted-list"><li style="list-style-type:disc">Örnekleme anındaki değer s(t)&#x27;nin enerjisi çıktı.</li></ul><p id="8e78a1fd-ab2b-4fc3-8ba3-f77cb18e007c" class="">
+</p><h3 id="f81b9c1e-9390-4ef5-892b-354454123d94" class="">Örnek:</h3><figure id="feee39a0-b448-48ea-9304-376b0034e3cf" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2034.png"><img style="width:920px" src="Lecture%208%20%20dad5b/Untitled%2034.png"/></a></figure><figure id="e2441c39-e0d3-4439-98a0-59a69daef1e9" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2035.png"><img style="width:755px" src="Lecture%208%20%20dad5b/Untitled%2035.png"/></a></figure><p id="d19740e9-f2be-460f-ad92-ce68df4211a6" class="">
+</p><figure id="2733c418-f02e-4c59-8d0f-3e7f3f0a9b72" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2036.png"><img style="width:933px" src="Lecture%208%20%20dad5b/Untitled%2036.png"/></a></figure><ul id="2a3686f0-afc9-443d-83ba-44e434ea614e" class="bulleted-list"><li style="list-style-type:disc">Biraz önceki sistemde ilişkili alıcı kullanılsa, 1101 bit dizisi için, gürültü yokken:</li></ul><p id="95a350f0-4b53-45d0-a5e4-0333a9bd7dfa" class="">
+</p><figure id="5481607a-5028-4605-96b8-e92e427e7815" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2037.png"><img style="width:845px" src="Lecture%208%20%20dad5b/Untitled%2037.png"/></a></figure><ul id="38fbb2e3-7e38-4f67-8b01-8b2777034e42" class="bulleted-list"><li style="list-style-type:disc">İlişkili alıcı, Uyumlu Süzgeçli alıcı ile aynı hata performansına sahiptir.</li></ul><p id="29a66c7c-4a80-4471-92e1-c1ba679cc2d0" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="9537982e-605a-414a-b7d0-707a01393559"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Alıcıya s_1(t) de gelse s_0(t) de gelse, alıcıda sadece bir tanesi tanımlıdır.</div></figure><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="01d1570d-bb15-4887-809d-5bcaf43b80d0"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Gönderilen işaret sayısı 2&#x27;den fazlaysa, bu işaretler birbirlerinin linear fonksiyonları halinde yazılabilirse, tek uyumlu süzgeç çözüm için yeterlidir.
+- Eğer yazılamazsa her işaret için farklı uyumlu süzgeç gereklidir.</div></figure><p id="2e0bf76d-89ed-415c-a0db-be45c8bbcf7f" class="">
+</p><h1 id="fc6c4d1d-f2c2-49cb-8501-75cca5c6ad9b" class="">Uygulama</h1><h2 id="720fc716-0556-4f55-b12a-deb6fb10eb2e" class="">1.</h2><figure id="e09dd7a4-a7e1-4ce6-9801-fc6a4e431b59" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2038.png"><img style="width:922px" src="Lecture%208%20%20dad5b/Untitled%2038.png"/></a></figure><h3 id="60b3ea64-96d5-40fc-87df-33df50dbd20b" class="">a)</h3><figure id="be20a881-eb1a-420a-b1ef-915114bedaa6" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2039.png"><img style="width:890px" src="Lecture%208%20%20dad5b/Untitled%2039.png"/></a></figure><figure id="b135b5f9-f333-437d-b504-5d08f9e20dc8" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2040.png"><img style="width:914px" src="Lecture%208%20%20dad5b/Untitled%2040.png"/></a></figure><ul id="909fd59c-16b2-4158-88c4-8c824adab8bf" class="bulleted-list"><li style="list-style-type:disc">G_T(f) fonksiyonu Raised Cosine ise G_R(f) fonksiyonun 1 olması yeterli olacaktır.<ul id="3843f271-7435-415f-9948-aae30fab985d" class="bulleted-list"><li style="list-style-type:circle">Ama bu süzgeçin sonsuz aralıkta değil de yeterli aralıkta 1 olmasını istiyoruz.</li></ul><ul id="3745233b-6af4-4958-8655-1efc8790bf21" class="bulleted-list"><li style="list-style-type:circle">O yüzden G_T(f)&#x27;in band genişliğini hesaplıyoruz.<figure id="d43ecc68-3f46-484d-abfb-3f5987fdb4c8" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>B</mi><mo>=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mi>α</mi></mrow><mrow><mn>2</mn><mi>T</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">B=\frac{1+\alpha}{2T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.00744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure></li></ul><ul id="a494d623-7f15-4ad9-9f90-d66ab255aaa4" class="bulleted-list"><li style="list-style-type:circle">Bu şekilde ISI olmayacak G_R(f) bulunur.</li></ul></li></ul><ul id="c787aed6-5e37-4e70-b9b8-e2f633cafdda" class="bulleted-list"><li style="list-style-type:disc">Ayrıca band verimliliği de:</li></ul><figure id="b81f247c-7c4c-4006-b508-c76bbb8ed344" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2041.png"><img style="width:645px" src="Lecture%208%20%20dad5b/Untitled%2041.png"/></a></figure><p id="4f514346-49a0-4a4f-bdc0-26938a39a242" class="">
+</p><h3 id="621d0004-a907-4af2-aa1d-e3677b021dab" class="">b)</h3><figure id="2f3a18b8-1bf5-4d87-961a-b6dc6d27806d" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2042.png"><img style="width:878px" src="Lecture%208%20%20dad5b/Untitled%2042.png"/></a></figure><ul id="61fb7499-f257-4165-957c-e8bc2d8742f1" class="bulleted-list"><li style="list-style-type:disc">Ek şıklarda verilen farklı G_T(f) değerlerini kullanarak bu sistemlerde ISI olup olmadığını bulunacak.</li></ul><figure id="67c332f6-288c-47af-b80f-6380c3fc444e" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2043.png"><img style="width:528px" src="Lecture%208%20%20dad5b/Untitled%2043.png"/></a></figure><p id="1b75c62d-947f-4e09-bc8d-a8c5bd4b3d5f" class="">
+</p><ul id="146b3d0b-ca67-432a-b8e1-644ff2f41493" class="block-color-teal_background bulleted-list"><li style="list-style-type:disc">i)</li></ul><figure id="9fe93c25-f907-4bdf-84f6-2715e68ff45e" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2044.png"><img style="width:576px" src="Lecture%208%20%20dad5b/Untitled%2044.png"/></a></figure><figure id="d669b782-a0bb-4ca3-932a-14b85a43d92d" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2045.png"><img style="width:941px" src="Lecture%208%20%20dad5b/Untitled%2045.png"/></a></figure><ul id="1236be12-03bd-4fb8-a0a0-924a63c6f854" class="bulleted-list"><li style="list-style-type:disc">Mutlak değer işareti faz değerini ortadan kaldırarak sadece genliğe odaklanmamızı sağlar.<figure id="65c9cae3-ff0f-445e-9595-df842bff99d0" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2046.png"><img style="width:470px" src="Lecture%208%20%20dad5b/Untitled%2046.png"/></a></figure><ul id="305ce99a-ef62-4e03-8f6d-9ecd1d87d97f" class="bulleted-list"><li style="list-style-type:circle">O yüzden böyle yazılabilir.</li></ul></li></ul><p id="f1cc5a4c-a5ba-46b6-848d-4aecaadf819d" class="">
+</p><ul id="794d3f44-d3b0-4c6f-9660-e843b97dfc65" class="block-color-teal_background bulleted-list"><li style="list-style-type:disc">ii)</li></ul><figure id="2411a99c-5ba1-432e-8e67-d6bfb6dabdb0" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2047.png"><img style="width:831px" src="Lecture%208%20%20dad5b/Untitled%2047.png"/></a></figure><figure id="252875f1-ea4f-4b2a-b094-0fb5cc8cfbe4" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2048.png"><img style="width:896px" src="Lecture%208%20%20dad5b/Untitled%2048.png"/></a></figure><p id="c37c510c-8b13-428e-a355-cc57464aa0f1" class="">
+</p><ul id="6f0dd97f-5643-47da-bed2-ad9a47572c8c" class="block-color-teal_background bulleted-list"><li style="list-style-type:disc">iii)</li></ul><figure id="34a1f041-7d5b-488f-b7e4-e30152833d60" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2049.png"><img style="width:615px" src="Lecture%208%20%20dad5b/Untitled%2049.png"/></a></figure><figure id="f1aabbbe-d82d-4ad7-a90d-2fe84b901e9c" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2050.png"><img style="width:893px" src="Lecture%208%20%20dad5b/Untitled%2050.png"/></a></figure><ul id="38694d65-7a8d-46fc-b268-8856b1f41a96" class="bulleted-list"><li style="list-style-type:disc">P(f)&#x27;ler ile dümdüz bir şekil elde edileceği için ISI oluşmayacaktır.</li></ul><p id="2696eed3-d536-4f72-948c-b76da74c03e0" class="">
+</p><ul id="85fe82e2-8ed2-4b00-8a51-fa04847e133b" class="block-color-teal_background bulleted-list"><li style="list-style-type:disc">iv)</li></ul><figure id="5168f8af-99c1-42e1-82d4-4e50090737e9" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2051.png"><img style="width:579px" src="Lecture%208%20%20dad5b/Untitled%2051.png"/></a></figure><figure id="51fc4176-b615-4577-9e74-9f99330d3ffa" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2052.png"><img style="width:528px" src="Lecture%208%20%20dad5b/Untitled%2052.png"/></a></figure><p id="af6c2672-49c3-493b-b0dd-454bf7da84b5" class="">
+</p><p id="b9b00b05-c16b-4f09-be5c-5478d9498ffd" class="">
+</p><ul id="77a73358-9602-4902-b276-62e7f40b5621" class="block-color-teal_background bulleted-list"><li style="list-style-type:disc">v)</li></ul><figure id="c9f1ea35-72ac-4b3a-9a54-278eee7b50ca" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2053.png"><img style="width:753px" src="Lecture%208%20%20dad5b/Untitled%2053.png"/></a></figure><figure id="bf302c04-828e-4937-a65d-bab4cd62af1e" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2054.png"><img style="width:893px" src="Lecture%208%20%20dad5b/Untitled%2054.png"/></a></figure><ul id="8da31859-4ac7-47eb-bfb9-bbc17644bef1" class="bulleted-list"><li style="list-style-type:disc">sinc fonksiyonunun içinin tamsayı olduğu noktalarda sinc fonksiyonu &quot;0&quot; olur.</li></ul><ul id="0dfda73e-0089-4ccb-831d-aa0ad7344254" class="bulleted-list"><li style="list-style-type:disc">f=1/2T&#x27;ye göre tek simetrik olmadığı için:<ul id="629806f8-4ede-4386-9674-3963150523e9" class="bulleted-list"><li style="list-style-type:circle">ISI görülür.</li></ul></li></ul><p id="f173e049-6e77-4091-9e2f-6bd5570df277" class="">
+</p><ul id="68b81fcc-0c58-4297-a2a7-9ed056dbc78f" class="bulleted-list"><li style="list-style-type:disc">NOT:<ul id="29fa70e1-5bdc-4c9c-b93f-7a80495da2ac" class="bulleted-list"><li style="list-style-type:circle">1/2T&#x27;ye göre simetrik daha kolay nasıl anlaşılabilir?</li></ul></li></ul><figure id="d4a105b9-f0db-4156-b6f7-7b257b58fdb4" class="image"><a href="Lecture%208%20%20dad5b/Untitled%2055.png"><img style="width:417px" src="Lecture%208%20%20dad5b/Untitled%2055.png"/></a></figure></div></article></body></html>

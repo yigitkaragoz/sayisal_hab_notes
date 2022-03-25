@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lecture 1 (04.03.21)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4bea5fc0-7c83-47ec-86ff-e57bb03b0e69" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">1️⃣</span></div><h1 class="page-title">Lecture 1 (04.03.21)</h1></header><div class="page-body"><nav id="9bf2a909-b749-4805-b204-a956e02df284" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#309cb85e-8d93-4933-af4c-68206f961bba">Sayısal Haberleşme</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#23c9f10b-15dd-4c04-ac15-a71c4e145fb4">Neden Sayısal Haberleşme?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#76f45438-5668-423e-b621-bc06f8850c3c">Sayısal Bir Haberleşme Sisteminin Genel Blok Diyagramı</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#77e60454-1daf-40fb-bbc7-113066c18791">Kanal Kodlama</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9acd1fe1-e7c5-4d15-937a-918dcfb8e2ce">Darbe ve Taşıyıcı Modülasyonu</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#899b583c-77e7-42df-9e22-963b034e9000">Bilgi Miktarı</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c1e1ba69-ef65-4861-846b-60dab3f4722c">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6f400bb7-c367-48a0-8570-19cab53e7d33">Shannon&#x27;un Gürültülü Kodlama Teoremi</a></div></nav><h1 id="309cb85e-8d93-4933-af4c-68206f961bba" class="">Sayısal Haberleşme</h1><figure id="401c64d5-436d-4c46-b079-f20fa0039698" class="image"><a href="Lecture%201%20%204bea5/Untitled.png"><img style="width:672px" src="Lecture%201%20%204bea5/Untitled.png"/></a></figure><h2 id="23c9f10b-15dd-4c04-ac15-a71c4e145fb4" class="">Neden Sayısal Haberleşme?</h2><figure id="6d431442-868d-4b9a-81af-b28ab9792c22" class="image"><a href="Lecture%201%20%204bea5/Untitled%201.png"><img style="width:384px" src="Lecture%201%20%204bea5/Untitled%201.png"/></a></figure><p id="7cbc293f-0616-4c51-85f7-8d8b6b96a464" class="">
+</p><ol type="1" id="2a20ce31-b0dc-4fa4-a11d-87839b3c0ddb" class="numbered-list" start="1"><li>Daha güvenilir, daha kolay ve daha esnek tasarım/gerçekleme mümkün.</li></ol><p id="0d9a8514-0925-4727-968e-fcf1f0f1fb45" class="">
+</p><p id="15eef88f-92fd-4b10-89e9-548f624d9504" class="">2. Sayısal işaretleri tekrar elde etmek mümkün:</p><figure id="c2c6d67a-a58a-4ad6-b11b-e5cd3a13dad9" class="image"><a href="Lecture%201%20%204bea5/Untitled%202.png"><img style="width:3169px" src="Lecture%201%20%204bea5/Untitled%202.png"/></a></figure><ul id="9a04d42d-1c29-4f2b-88b3-4857587391c7" class="bulleted-list"><li style="list-style-type:disc">Aktarıcı/tekrarlayıcı bloğu sayesinde bozulmuş işaretten asıl işaret elde edilebilir.</li></ul><p id="9d271672-3e90-48a9-aaa8-f47d929470c3" class="">
+</p><p id="ec3026cb-c8d1-4b1d-827a-de885c72ce0e" class="">3. İşaretlerin TDM ile birleştirilmesi FDM ile birleştirilmesinden daha kolay.</p><figure id="7712bf00-1ccd-471a-9cea-a7ae3c47f32f" class="image"><a href="Lecture%201%20%204bea5/Untitled%203.png"><img style="width:2617px" src="Lecture%201%20%204bea5/Untitled%203.png"/></a></figure><p id="0569ce80-67a8-46b1-9b23-137cefe044c9" class="">
+</p><p id="73114a59-2c90-47c5-9faa-53a412e6e9cf" class="">4. Bozucu etkilere karşı hata düzeltme tekniklerini kullanmak mümkün.</p><p id="c809bc70-f561-4566-80f3-c68b67203615" class="">
+</p><h2 id="76f45438-5668-423e-b621-bc06f8850c3c" class="">Sayısal Bir Haberleşme Sisteminin Genel Blok Diyagramı</h2><figure id="c45a319c-48d4-423b-9af1-4c89c61242f2" class="image"><a href="Lecture%201%20%204bea5/Untitled%204.png"><img style="width:624px" src="Lecture%201%20%204bea5/Untitled%204.png"/></a></figure><ul id="c50f5b60-39d8-44be-8e58-f8bbf7698f4e" class="bulleted-list"><li style="list-style-type:disc">Analogtan sayısala dönüştürmenin ilk basamağı örneklemedir.</li></ul><p id="9f4067a7-b2ff-4924-a705-ab3ade33f242" class="">
+</p><h3 id="77e60454-1daf-40fb-bbc7-113066c18791" class="">Kanal Kodlama</h3><figure id="b071ba41-6611-494d-9b77-5f35e3e8dfe1" class="image"><a href="Lecture%201%20%204bea5/Untitled%205.png"><img style="width:384px" src="Lecture%201%20%204bea5/Untitled%205.png"/></a></figure><ul id="4a246d36-2e69-431c-9290-7df49323c363" class="bulleted-list"><li style="list-style-type:disc">Kanal kodlamada koruma amaçlı bit sayısında değişiklikler yapılır.<ul id="30acea96-b3a7-4b44-9efe-ae6d748c8509" class="bulleted-list"><li style="list-style-type:circle">&quot;k&quot; bitlik bir değer girildiği zaman &quot;n&quot; bitlik bir çıkış alındığı durumda;<figure id="32535102-74f1-41e4-a6cc-dc818b89b30e" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>R</mi><mo>=</mo><mfrac><mi>k</mi><mi>n</mi></mfrac><mo>⩽</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">R=\frac{k}n\leqslant1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.05744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.37144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩽</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span></div></figure></li></ul></li></ul><p id="1e06993b-0b99-4a87-972f-3f826be067ea" class="">
+</p><figure id="3aa043f3-5195-4658-9dbf-ecfc5222c262" class="image"><a href="Lecture%201%20%204bea5/Untitled%206.png"><img style="width:239px" src="Lecture%201%20%204bea5/Untitled%206.png"/></a></figure><ul id="ac43b33e-16e1-4fd9-8888-23783fe1d412" class="bulleted-list"><li style="list-style-type:disc">Eğer telefonda karşıdaki kişi bizi duymakta sıkıntı olursa, söyleyeceğimiz şeyi şehirlerle kodlarız.<ul id="aaa03382-b2aa-4b6d-a51f-88bef59218a6" class="bulleted-list"><li style="list-style-type:circle">Bu durum ise &quot;Kanal Kodlama&quot;ya örnektir.</li></ul></li></ul><ul id="4d2412a7-36c9-441a-91f4-52f90133595e" class="bulleted-list"><li style="list-style-type:disc">Kişi yine duyduğu şehirlerde birkaç harfi yanlış duysa bile en yakın şehir ismine yuvarlayarak hatayı düzeltmiş olur.<ul id="c9844874-c7d2-42ff-b9f7-304778cbecaa" class="bulleted-list"><li style="list-style-type:circle">Bu da Sayısal Haberleşme alanında hata düzeltme durumuna örnektir.</li></ul></li></ul><p id="9d8299e4-3280-4915-a023-aa4169dc3acb" class="">
+</p><ul id="97fc1da7-ed10-4d4e-ad74-743843cabef6" class="bulleted-list"><li style="list-style-type:disc">Soğuk havada palto giymek yine &quot;Kanal Kodlama&quot;ya örnektir.</li></ul><ul id="b9b8e4d3-e313-498d-b812-abc64a38316d" class="bulleted-list"><li style="list-style-type:disc">Whatsapp&#x27;tan &quot;tamam&quot; yerine yazılan &quot;tmm&quot; yazısı ise &quot;<span style="border-bottom:0.05em solid">Kaynak</span> Kodlama&quot;ya örnektir.</li></ul><p id="6e75bb1e-f08e-44e9-b042-26ca41ecff9e" class="">
+</p><h3 id="9acd1fe1-e7c5-4d15-937a-918dcfb8e2ce" class="">Darbe ve Taşıyıcı Modülasyonu</h3><figure id="27eaf449-d47e-4b52-83cf-a886bcdbbf46" class="image"><a href="Lecture%201%20%204bea5/Untitled%207.png"><img style="width:245px" src="Lecture%201%20%204bea5/Untitled%207.png"/></a></figure><ul id="5687b85e-3bf5-414f-8e10-2c1b87a5a449" class="bulleted-list"><li style="list-style-type:disc">Darbe Modülasyonu, Temelband bir işarettir.<ul id="459790bb-1519-4e33-a87a-ffd976281fab" class="bulleted-list"><li style="list-style-type:circle">Merkezi 0&#x27;dadır.</li></ul></li></ul><ul id="7620533a-a2b3-4f43-b020-e59dad75febb" class="bulleted-list"><li style="list-style-type:disc">Ardından Taşıyıcı Modülasyonu ile istenilen frekansta taşınır.</li></ul><p id="b947ef07-ea0d-4f01-9bef-108dbf91ce14" class="">
+</p><hr id="16078e4a-afed-4d7f-89f0-04fe70256b18"/><p id="0852cb20-e408-434f-aec2-93b317b99bf3" class="">
+</p><figure id="99316ea4-81bd-4224-95f2-cc512e575a6b" class="image"><a href="Lecture%201%20%204bea5/Untitled%208.png"><img style="width:2657px" src="Lecture%201%20%204bea5/Untitled%208.png"/></a></figure><ul id="3f50b328-97ce-44a7-96db-1014371643f8" class="bulleted-list"><li style="list-style-type:disc">Alıcıdaki işleyiş ↑</li></ul><p id="d4760065-c685-444d-8d31-163b50fcbd50" class="">
+</p><p id="5d701c16-de6b-4b62-995d-b34de41cc5cc" class="">
+</p><h2 id="899b583c-77e7-42df-9e22-963b034e9000" class="">Bilgi Miktarı</h2><figure id="7be5c83b-0760-4847-a48a-fd00998df6a5" class="image"><a href="Lecture%201%20%204bea5/Untitled%209.png"><img style="width:2773px" src="Lecture%201%20%204bea5/Untitled%209.png"/></a></figure><figure id="c0e9e041-40a8-48a5-9e45-7e5221c64d50" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>I</mi><mi>k</mi></msub><mo>=</mo><mo>−</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><msub><mi>P</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">I_k=-\log_2P_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.93858em;vertical-align:-0.24414em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></figure><ul id="25e03dd0-084b-494f-9343-dbe81ce77308" class="bulleted-list"><li style="list-style-type:disc">Eğer logaritma &quot;2 tabanında&quot; ise bilgi miktarının birimi &quot;bit&quot; olur.</li></ul><ul id="9eb8d879-8059-40c9-a402-3441fa08fcce" class="bulleted-list"><li style="list-style-type:disc">Mesajın üretilme olasılığı azaldıkça taşıdığı bilgi arttı.</li></ul><p id="7d15fbdb-d56f-4680-8c6c-9f7875e5d4fa" class="">
+</p><figure id="be5375d6-8bbb-4021-84ea-60209db30855" class="image"><a href="Lecture%201%20%204bea5/Untitled%2010.png"><img style="width:576px" src="Lecture%201%20%204bea5/Untitled%2010.png"/></a></figure><ul id="06907cb1-98fe-40b9-9ba9-5becdbc0fd1e" class="bulleted-list"><li style="list-style-type:disc">E: expected value</li></ul><ul id="316a489d-e823-488f-8152-2e218a938dc3" class="bulleted-list"><li style="list-style-type:disc">H: Entropi</li></ul><p id="3587cdcd-b86a-481c-b714-bf5642eec4b3" class="">
+</p><h3 id="c1e1ba69-ef65-4861-846b-60dab3f4722c" class="">Örnek:</h3><figure id="e0e42b22-8877-4389-a94d-d978c39b78d7" class="image"><a href="Lecture%201%20%204bea5/Untitled%2011.png"><img style="width:528px" src="Lecture%201%20%204bea5/Untitled%2011.png"/></a></figure><ul id="ad325f56-a76a-4f4a-9317-ccd420d4c3a2" class="bulleted-list"><li style="list-style-type:disc">Sadece tek bilginin olasılığı 1  ve diğerlerininki 0 iken Entropi=0 olur.</li></ul><p id="740828bf-a690-4466-84bc-da2a7565c050" class="">
+</p><hr id="9122df60-7712-4396-affd-09c43df05747"/><p id="3f76009c-97b7-43c5-8506-9f848d293fe4" class="">
+</p><figure id="7048c613-627e-4dcb-ba46-efe0177c68df" class="image"><a href="Lecture%201%20%204bea5/Untitled%2012.png"><img style="width:576px" src="Lecture%201%20%204bea5/Untitled%2012.png"/></a></figure><ul id="b74e0c6b-6f25-4647-81d1-5ad794b3eacd" class="bulleted-list"><li style="list-style-type:disc">k. mesajın <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">n_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> bit uzunluklu bir bit dizisine karşı düşürüldüğünü varsayalım.</li></ul><ul id="0f75d2c0-115c-46fb-851b-f1c6d098a9a4" class="bulleted-list"><li style="list-style-type:disc">Sembol başına ortalama uzunluk:</li></ul><figure id="4c4a375b-64a2-4415-8069-7b642fe58ea5" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>L</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></munderover><msub><mi>P</mi><mi>k</mi></msub><msub><mi>n</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">L=\sum^K_{k=1}P_kn_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.1304490000000005em;vertical-align:-1.302113em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283360000000002em;"><span style="top:-1.8478869999999998em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.302113em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="378ab7a7-636a-4402-98db-bcd7c8af90bf" class="">
+</p><h2 id="6f400bb7-c367-48a0-8570-19cab53e7d33" class="">Shannon&#x27;un Gürültülü Kodlama Teoremi</h2><ul id="5acf2d53-4da9-4bed-bb05-f06e053dbea5" class="bulleted-list"><li style="list-style-type:disc">İletim ortamındaki bozucu etkiler ne olursa olsun, eğer iletim hızı kanal kapasitesinin altında ise, öyle haberleşme sistemleri tasarlanabilir ki, alıcının hata olasılığı &quot;0&quot; olur.</li></ul><figure id="060b4e01-345b-4e7d-87e6-6b5d27e41cce" class="image"><a href="Lecture%201%20%204bea5/Untitled%2013.png"><img style="width:624px" src="Lecture%201%20%204bea5/Untitled%2013.png"/></a></figure><ul id="0dc73461-c662-413d-94ee-a6ff2fd7e77e" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>b</mi></msub><mo>&lt;</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">R_b&lt;C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></span><span>﻿</span></span> sağlanıyorsa hatasız bir sistem tasarlanabilir.<ul id="09a2b59c-3ba0-41df-a878-32641fbbf79e" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>b</mi></msub></mrow><annotation encoding="application/x-tex">R_b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>: iletim hızı, saniyede iletebilinen bit sayısı.</li></ul></li></ul><p id="456f45ab-8388-45b5-8df9-a6ebfe6d874a" class="">
+</p><ul id="c993af1c-843b-4c9c-8574-8bc80e5056c2" class="bulleted-list"><li style="list-style-type:disc">İletim hızını çok düşürmeden de hata olasılığı 0&#x27;a giden sistemler tasarlanabileceğini söylemiştir.</li></ul><p id="8c5ee4eb-dd05-4df9-b1af-fd86323b7d22" class="">
+</p><p id="79c2f416-6627-46cc-b694-4b92489a1760" class="">
+</p><figure id="681d6a1d-b6f7-4cee-bee2-3ba5d07cc049" class="image"><a href="Lecture%201%20%204bea5/Untitled%2014.png"><img style="width:528px" src="Lecture%201%20%204bea5/Untitled%2014.png"/></a></figure><ul id="1e3783c9-5350-4636-833c-a0002727d320" class="bulleted-list"><li style="list-style-type:disc">C&#x27;nin altında kalındığı sürece hatasız sistemin tasarlanabileceğini Shannon söylemiştir.<ul id="950da0aa-1ea0-4b13-9b61-b77bcbf2241d" class="bulleted-list"><li style="list-style-type:circle">Ama kendisi de böyle bir sistemin nasıl tasarlanabileceğini bilmemektedir.</li></ul></li></ul><p id="ba823d5f-92ac-4e69-a129-97cf41bc43ef" class="">
+</p><p id="61c40880-2fcc-4019-98a4-f8a7a75ceca1" class="">
+</p><figure id="273dde2f-3fcd-4937-87b3-b053140aa985" class="image"><a href="Lecture%201%20%204bea5/Untitled%2015.png"><img style="width:576px" src="Lecture%201%20%204bea5/Untitled%2015.png"/></a></figure><ul id="b0d093e2-34a5-46d4-b1d3-41d47e92846a" class="bulleted-list"><li style="list-style-type:disc">Polar kodlamaya kadar hiçbir kodlama türü Shannon Teoremini teorik olarak kanıtlayamamıştır.</li></ul><ul id="d3599c3b-b209-4e25-917d-c142cbc670b3" class="bulleted-list"><li style="list-style-type:disc">Şu esnada Polar kodlama 5G&#x27;de kontrol kanallarında standartta kullanılmaktadır.</li></ul><p id="d89317d2-67af-4ff9-a16a-461557143883" class="">
+</p><ul id="4e53120b-ecde-4098-8ea0-f4303990d2f1" class="bulleted-list"><li style="list-style-type:disc">LDPC kodlar aslen blok kodlarının başka bir versiyonudur.<ul id="9a173a3e-3b89-4187-8d5f-b2f374104492" class="bulleted-list"><li style="list-style-type:circle">1960&#x27;da bu kodlar bulunmuş olsa bile o zamanlarda değeri anlaşılamamıştır.</li></ul><ul id="99a3ef89-fec9-4ff7-ae77-eb7fc1bb8bb6" class="bulleted-list"><li style="list-style-type:circle">Bilgisayarların gelişimi ile değeri anlaşılmıştır.</li></ul></li></ul><p id="e3be7e19-d59a-4a5a-9591-3951f1607abe" class="">
+</p><p id="3014ef6f-b4b1-4c43-88e1-3953e9cc7bbc" class="">
+</p><p id="7cf1731b-94b6-4052-b750-45a181a35dbd" class="">
+</p><figure id="f01ed6fe-ee42-4cb6-8504-11c0e3c3fd29" class="image"><a href="Lecture%201%20%204bea5/Untitled%2016.png"><img style="width:528px" src="Lecture%201%20%204bea5/Untitled%2016.png"/></a></figure><ul id="7193c3d5-70eb-488a-9aaf-f2a4f9abfca1" class="bulleted-list"><li style="list-style-type:disc">Verici ve alıcıda birden fazla anten kullanımının olduğu sistemler.</li></ul></div></article></body></html>

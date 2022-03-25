@@ -1,0 +1,700 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lecture 6 (08.04.21) [DM, SDM, ADM, Farksal PCM, Sayısal PAM, PDM, PPM]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a24e999c-8252-499d-8fe5-55326820f52b" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">6️⃣</span></div><h1 class="page-title">Lecture 6 (08.04.21) [DM, SDM, ADM, Farksal PCM, Sayısal PAM, PDM, PPM]</h1></header><div class="page-body"><nav id="381444f1-41f3-45f2-8217-f8d4a3c685dd" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#70be08a1-959c-4aed-89ca-61826bb2a33b">Delta Modülasyonu (DM)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#459a00af-61b9-498d-a9c2-c002ff0ce183">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#571fdcb2-96e5-455d-b1e4-6e515c7e8aa7">Delta Modülasyonuna ilişkin 3 problem vardır:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a2b83bef-f2d7-4198-becf-4d17acb852e6">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#89afdcfa-4528-4dbe-97d2-416e014df5b9">Sigma-Delta Modülasyonu (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Σ</span></span></span></span></span><span>﻿</span></span>-DM)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1e4a4fe7-2313-481f-a4da-900c9a8d19c5">Adaptif Delta Modülasyonu (ADM)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#70b68ad9-46ed-458f-849e-3997d8c5ca18">Çok düzeyli iletimin problemi: İkili Kodlama Kullanan ADM</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#08a4015b-db9b-407d-9ed0-fa48ddc0de10">Farksal PCM (Differential PCM)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#05606685-3f67-42c7-b29e-226f80f661b6">Diğer Modülasyonlar karşılaştırma:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#110d6c28-489f-4c02-a3be-57cd1b5f686d">Sayısal PAM, PDM, PPM</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#773f14ac-553a-4e0b-a7f4-2647d04d3cfb">Sayısal PAM</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1904a094-3ffe-4250-bbf7-ebac25187965">Sayısal PDM</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7374fc7d-f55a-44ad-9862-c4093e2007d5">Sayısal PPM</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#db0bb6d4-2d20-496f-8aa2-f95d6ef9c2dd">Uygulama</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#059f34c5-444a-4140-bda8-dd0dacfbc3a7">1.</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ac28471a-bb26-48df-99d3-5673ad3ed1bb">a)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5e42ba6b-8423-40ac-bcbe-e2d0a925dd00">b)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#711fc32d-c1f4-47db-8fc0-c39ef5d6d4ae">c) Kuantalanmış işaretin ortalama gücü</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6632e28c-1781-47e4-8abc-73c17cd6c303">d) Kuantalama Gürültüsünün Ortalama Gücü</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c4e58493-6da9-401e-87c8-e72dc4fc5c88">e) Gerekli Bit Sayısı ve 0-1&#x27;lerin üretilme olasılığı</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bc132534-2e74-4e68-ba1d-240cbef84f15">2.</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#93876f4b-fcff-429a-aa82-5e82e1274504">x(t) ile x_şapka(t):</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cbc66a96-8c7c-4228-98ff-2e7ca756d62e">x_s(t):</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b0b5afb5-347b-4457-a255-65b7393d4857">x_c(t):</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cbb347b2-ddf6-49f6-bbc7-b439d3d5b62d">Demodülatör diyagramı</a></div></nav><ul id="7be7bef1-0f5e-4280-b518-f2e1e26eeeb3" class="bulleted-list"><li style="list-style-type:disc">Analog işareti Sayısala çevirmeye çalışıyoruz.<ul id="7ab81da3-ee1c-46c4-8a95-fe0360b81922" class="bulleted-list"><li style="list-style-type:circle">Bunun PCM ile nasıl yapıldığını konuştuk.</li></ul><ul id="ed1ac7b5-d80c-44a5-9c75-70f1052eebd6" class="bulleted-list"><li style="list-style-type:circle">Başka bir yol ise Delta modülasyonudur.</li></ul></li></ul><p id="0c152a3a-e709-4c4c-93b0-a685f5c94482" class="">
+</p><h1 id="70be08a1-959c-4aed-89ca-61826bb2a33b" class="">Delta Modülasyonu (DM)</h1><ul id="1fb0c217-10e6-41c5-b231-3be300ea6e36" class="bulleted-list"><li style="list-style-type:disc">PCM&#x27;de yapılan önce bu işareti kuantalamak sonra kuantalama düzeyine göre bitlere eşitlemek.<ul id="1dafc7ab-dacc-45c8-9ef6-e385f872db76" class="bulleted-list"><li style="list-style-type:circle">Eşlenen bit sayısının artması iletim hızının düşmesine neden olur.</li></ul><ul id="f7ad8b3e-676a-4bd6-a1f9-de2c597430c9" class="bulleted-list"><li style="list-style-type:circle">Süre uzamasın isterseniz darbe genişliği düşürülmeli.</li></ul></li></ul><p id="56b8b159-6d9e-4cd7-abbc-9e5f228f34f4" class="">
+</p><figure id="db05e811-cf7d-4440-9d4a-00a7ed45f3d3" class="image"><a href="Lecture%206%20%20a24e9/Untitled.png"><img style="width:256px" src="Lecture%206%20%20a24e9/Untitled.png"/></a></figure><ul id="681b11a8-43a6-464e-83f2-1511968b6379" class="bulleted-list"><li style="list-style-type:disc">DM&#x27;de ise her bir örneğe ayrı ayrı bit dizilerine dönüştürmek yerine aradaki farkı bit dizisine karşılık düşürsek nolur?</li></ul><ul id="286d32ee-6bd8-4615-942e-58b8174db6e3" class="bulleted-list"><li style="list-style-type:disc">Aradaki farklar her zaman küçük kalacaktır.<ul id="88869599-c4eb-4de2-a7e6-b9e38f32385f" class="bulleted-list"><li style="list-style-type:circle">Hiçbir zaman devasa bir atılım gözlenmez.</li></ul><ul id="e18f5929-4ff3-4df3-b40a-fcdeebf3ba13" class="bulleted-list"><li style="list-style-type:circle">Bundan dolayı Farksal PCM tanımlanmıştır.<ul id="ce318907-b4b9-41e7-b90b-be6e6491418d" class="bulleted-list"><li style="list-style-type:square">Bunun ise en basit hali Delta Modülasyonu&#x27;dur.</li></ul></li></ul></li></ul><p id="b922b331-6ccf-43ca-902d-8a64f004c08a" class="">
+</p><p id="281ab128-6981-42f3-acea-8486370a5c36" class="">
+</p><figure id="d62ae0ce-2b21-43a5-940b-651aac70e1dd" class="image"><a href="Lecture%206%20%20a24e9/Untitled%201.png"><img style="width:919px" src="Lecture%206%20%20a24e9/Untitled%201.png"/></a></figure><ul id="280cdcca-a8cb-4334-b2db-41ebb4c2e8bc" class="bulleted-list"><li style="list-style-type:disc">Vericide:</li></ul><figure id="1f523ef8-8899-474c-9f22-54ec3e2dac55" class="image"><a href="Lecture%206%20%20a24e9/Untitled%202.png"><img style="width:934px" src="Lecture%206%20%20a24e9/Untitled%202.png"/></a></figure><p id="b5b4dcfa-b045-4476-97e6-6e1962ad9b39" class="">
+</p><div id="59222174-c06a-4eb5-83ef-24f9aa6df590" class="column-list"><div id="86b811ec-c563-46cc-8300-0fc98bc8eb67" style="width:50%" class="column"><figure id="fb525054-e389-4f7c-8c01-6a64b2ba679e" class="image"><a href="Lecture%206%20%20a24e9/Untitled%203.png"><img style="width:192px" src="Lecture%206%20%20a24e9/Untitled%203.png"/></a></figure><ul id="39b089dd-0598-4cbc-8a2f-4876991c6561" class="bulleted-list"><li style="list-style-type:disc">Örnekleme.</li></ul></div><div id="9580ec10-2d24-45a1-88bd-e03e11b1e699" style="width:50%" class="column"><figure id="9d2fd94e-e678-466f-81d2-ce74982eda1c" class="image"><a href="Lecture%206%20%20a24e9/Untitled%204.png"><img style="width:240px" src="Lecture%206%20%20a24e9/Untitled%204.png"/></a></figure><ul id="c56dc067-7130-481a-9b72-3159aa016fb4" class="bulleted-list"><li style="list-style-type:disc">Sınırlayıcı, Bir bitlik kuantalayıcı</li></ul></div></div><ul id="1da08421-ca77-4369-888e-092ff7d5a439" class="bulleted-list"><li style="list-style-type:disc">Fonksiyonların matematiksel hali:</li></ul><figure id="03918255-f5f6-4189-9e3e-5550298bb12f" class="image"><a href="Lecture%206%20%20a24e9/Untitled%205.png"><img style="width:528px" src="Lecture%206%20%20a24e9/Untitled%205.png"/></a></figure><figure id="a009c570-44fe-4185-9b92-86122061b2df" class="image"><a href="Lecture%206%20%20a24e9/Untitled%206.png"><img style="width:528px" src="Lecture%206%20%20a24e9/Untitled%206.png"/></a></figure><ul id="a1f435cd-0cda-4b75-9674-dea4cc81de77" class="bulleted-list"><li style="list-style-type:disc">Örneklemenin integralinin pratikteki sonucu ikinci şekildeki gibi olur.<ul id="ece9efbc-d814-4607-b2da-5f2c86a4b102" class="bulleted-list"><li style="list-style-type:circle">Keskin geçişler görülmez.</li></ul></li></ul><p id="bdb9d761-00ef-4e7f-b247-bb96e465fce2" class="">
+</p><figure id="6e78133c-8834-4933-8c5e-0b251b5fb4c4" class="image"><a href="Lecture%206%20%20a24e9/Untitled%207.png"><img style="width:528px" src="Lecture%206%20%20a24e9/Untitled%207.png"/></a></figure><ul id="e2db73eb-fdda-479d-a0b3-e88394da01b9" class="bulleted-list"><li style="list-style-type:disc">Örnekleme sonucu çıkan impulsların integrali alınırsa kırmızı ile çizilmiş birim basamak fonksiyonlarının toplamı çıkar.</li></ul><p id="d5d5b992-286b-404d-9577-559f76dd196d" class="">
+</p><ul id="bc348a5a-e653-411d-83d0-cb388b1f17fc" class="bulleted-list"><li style="list-style-type:disc">Alıcıda:</li></ul><figure id="d3977321-1f69-4c76-a7ce-f80b05b1b7ff" class="image"><a href="Lecture%206%20%20a24e9/Untitled%208.png"><img style="width:528px" src="Lecture%206%20%20a24e9/Untitled%208.png"/></a></figure><p id="52cfef8c-4875-49c5-ac1f-e9abd7970203" class="">
+</p><h3 id="459a00af-61b9-498d-a9c2-c002ff0ce183" class="">Örnek:</h3><figure id="1bd420bc-589a-473a-9d46-42d86ac4f316" class="image"><a href="Lecture%206%20%20a24e9/Untitled%209.png"><img style="width:817px" src="Lecture%206%20%20a24e9/Untitled%209.png"/></a></figure><ul id="e759ccd7-3f07-4857-8a6d-f5f7a9ca32ac" class="bulleted-list"><li style="list-style-type:disc">İlk anda aradaki fark olmayacağı için ikinci andan başlar.</li></ul><ul id="23e7f036-bfa0-408e-98ca-23b3206001aa" class="bulleted-list"><li style="list-style-type:disc">Aşağıdaki x_s(t) ikinci durumdaki hal iken grafik üzerine çizilen x_şapka(t) üçüncü haldir.</li></ul><p id="b028af73-4fc2-40a4-b168-ead89192acdc" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="7fe3760c-58ff-4027-9a25-136bab19bfd0"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Sistem geride kaldığını düşünürse yükselir, eğer ileri geçtiğini görür ise azalarak x&#x27;i takip ediyor.</div></figure><hr id="3f27a275-a985-4828-ad5c-cb921090762d"/><p id="53da8401-868b-4869-b984-d8f82e934e81" class="">
+</p><figure id="a4725757-d05d-4886-9092-2ec61090340c" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2010.png"><img style="width:528px" src="Lecture%206%20%20a24e9/Untitled%2010.png"/></a></figure><ul id="9598ec65-53b6-4dff-b49f-742eebc86e5f" class="bulleted-list"><li style="list-style-type:disc">Eğer Nyquist frekansı ile örnekleme frekansı sınırlanırsa Delta Modülasyonu çözülemez.<ul id="6dcfacff-8df1-49f3-bafc-c9f5b26c6091" class="bulleted-list"><li style="list-style-type:circle">O yüzden DM&#x27;nin örnekleme frekansı çok daha fazla seçilir.</li></ul><ul id="ba8ecdef-58ef-4c47-afac-2256e0742424" class="bulleted-list"><li style="list-style-type:circle">Bu DM&#x27;in dezavantajıdır.</li></ul></li></ul><ul id="8ff01303-e983-4e10-bde8-62f8a75b0037" class="bulleted-list"><li style="list-style-type:disc">DM&#x27;in avantajı ise <span style="border-bottom:0.05em solid">basitliğidir.</span></li></ul><p id="563303f9-8327-4ca2-bd3b-ac40ab077642" class="">
+</p><h2 id="571fdcb2-96e5-455d-b1e4-6e515c7e8aa7" class="">Delta Modülasyonuna ilişkin 3 problem vardır:</h2><p id="c5ae45e2-4f0e-4998-adfe-0e0f49e8737c" class="">
+</p><div id="ddf5db9e-e094-48a6-90fb-6ff0657eee9e" class="column-list"><div id="9f8d68f8-55be-4391-82be-6d362540b1fa" style="width:62.5%" class="column"><figure id="a538ffec-d283-438a-b399-8f920c7e2d9d" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2011.png"><img style="width:704px" src="Lecture%206%20%20a24e9/Untitled%2011.png"/></a></figure></div><div id="d7105ccf-748e-4f42-bbcf-70f2ff41b379" style="width:37.49999999999999%" class="column"><figure id="d28ee9f9-4225-4f08-98f2-727ed5b06ded" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2012.png"><img style="width:336px" src="Lecture%206%20%20a24e9/Untitled%2012.png"/></a></figure></div></div><figure id="1a40708b-17e2-4684-91de-d7b1c2341da4" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2013.png"><img style="width:201px" src="Lecture%206%20%20a24e9/Untitled%2013.png"/></a></figure><ul id="39d486a5-398e-4792-a47b-fa8cb6356377" class="bulleted-list"><li style="list-style-type:disc">İşarete ulaşmaya çalıştığı süre olan başlama zamanı bir problemdir ama önemli değildir.<ul id="42f817a9-34f9-46cb-86f2-d9c5657f6e4e" class="bulleted-list"><li style="list-style-type:circle">Deltayı arttırarak başlama zamanını kısabilirim.<ul id="40d47bdd-cfde-4192-8569-88bc94b1e757" class="bulleted-list"><li style="list-style-type:square">Ama bu <span style="border-bottom:0.05em solid">Arama Zamanı&#x27;nın</span> genliğini arttırır.</li></ul></li></ul></li></ul><p id="c982888d-ebb5-43d8-b2ee-1c8b914d27a7" class="">
+</p><figure id="f669e098-2e94-43f5-abf2-c9b2e72ccf56" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2014.png"><img style="width:240px" src="Lecture%206%20%20a24e9/Untitled%2014.png"/></a></figure><ul id="24f7f4ec-cf4f-4027-a58f-805d160b50b1" class="bulleted-list"><li style="list-style-type:disc">DM böylesine sabit bir x(t) anında osile edercesine davranabilir.<ul id="c0bb2012-32fc-4d6c-a1ca-d6ace48f3f63" class="bulleted-list"><li style="list-style-type:circle">Sabit bölgelerde iyi sonuç vermez.</li></ul><ul id="f1cd3440-6582-43a0-b1de-6b6085d54981" class="bulleted-list"><li style="list-style-type:circle">Buna <span style="border-bottom:0.05em solid">Boşta Çalışma Gürültüsü</span> denir.</li></ul></li></ul><p id="076a441f-41b3-4eee-8b17-cdad84a6d93d" class="">
+</p><figure id="1573dca4-44aa-4ebe-9328-62c02f1032ed" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2015.png"><img style="width:288px" src="Lecture%206%20%20a24e9/Untitled%2015.png"/></a></figure><ul id="62b937c5-e9ee-41c2-9f89-dad565fef735" class="bulleted-list"><li style="list-style-type:disc">x(t)&#x27;nin çok hızlı değiştiği anlarda DM bu sinyali yakalayamayacaktır.<ul id="cb72a7a2-e017-4060-bb8b-bd500e89b1da" class="bulleted-list"><li style="list-style-type:circle">Burda ise <span style="border-bottom:0.05em solid">Eğim Sınırlanması</span> yaşanır.</li></ul><ul id="69cac77c-be40-4a10-bc50-71e37765cd50" class="bulleted-list"><li style="list-style-type:circle">Mavi çizginin eğimi siyahtan fazla ise problem gözlenmez.</li></ul><figure id="5277c6ad-c613-4544-a992-577a23fd1653" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2016.png"><img style="width:624px" src="Lecture%206%20%20a24e9/Untitled%2016.png"/></a></figure><ul id="ac84cee8-86bf-408e-b27b-6ec27b99b054" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msub><mi>f</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\Delta f_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, sinyalin türevinden büyük olmalıdır.<ul id="68454ac0-0088-4483-8ef5-200508042e25" class="bulleted-list"><li style="list-style-type:square">Bu da genelde <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">f_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> arttırılarak yapılır.</li></ul></li></ul></li></ul><p id="1a8da296-3fd9-43d4-9ece-5185a8b323d3" class="">
+</p><h3 id="a2b83bef-f2d7-4198-becf-4d17acb852e6" class="">Örnek:</h3><figure id="793eede7-8a0d-466b-af1f-24fdd2040557" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2017.png"><img style="width:706px" src="Lecture%206%20%20a24e9/Untitled%2017.png"/></a></figure><p id="9f8c59a0-fd55-47c0-b85d-7c5b2b082cbb" class="">
+</p><h1 id="89afdcfa-4528-4dbe-97d2-416e014df5b9" class="">Sigma-Delta Modülasyonu (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Σ</span></span></span></span></span><span>﻿</span></span>-DM)</h1><ul id="c7ca8939-6caa-4146-ab38-c813a434f8f9" class="bulleted-list"><li style="list-style-type:disc">Vericide:</li></ul><figure id="eaee2605-c92a-4116-b40e-665bfe37d26b" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2018.png"><img style="width:584px" src="Lecture%206%20%20a24e9/Untitled%2018.png"/></a></figure><ul id="acdc2213-b045-4659-b9d0-afc8632a4844" class="bulleted-list"><li style="list-style-type:disc">Alıcıda:</li></ul><figure id="f3647545-4e95-4489-8394-f584742c0f6e" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2019.png"><img style="width:336px" src="Lecture%206%20%20a24e9/Untitled%2019.png"/></a></figure><p id="e3021c8e-329f-4369-b8f4-134921ea1186" class="">
+</p><figure id="d22efd04-c2f1-4921-86ea-fe9e786c1333" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2020.png"><img style="width:921px" src="Lecture%206%20%20a24e9/Untitled%2020.png"/></a></figure><ul id="d8a2cb96-751c-4e4c-a55c-f81d3d9ce083" class="bulleted-list"><li style="list-style-type:disc">Eğer işaretimiz çok yavaş değişiyorsa, fark bilgi taşımamaya başlar.<ul id="3a568722-3cfe-4e38-99d9-b67259fd47d7" class="bulleted-list"><li style="list-style-type:circle">Bu yüzden x(t)&#x27;ye yapay bir eğim sağlanır.</li></ul></li></ul><ul id="0fd1951e-fd2e-4585-b065-03efe96bd259" class="bulleted-list"><li style="list-style-type:disc">Alıcısı daha basittir.</li></ul><ul id="c7ed5e8a-20c2-493d-8939-c9aeebe7caeb" class="bulleted-list"><li style="list-style-type:disc">Alıcıda integral alınmadığı için kanaldaki gürültü kuvvetlendirilmemiş olur.</li></ul><p id="4b582345-be4d-4e8e-a29f-4ff52ae5e690" class="">
+</p><p id="3eceaf6e-7059-4228-9590-29096a378b91" class="">
+</p><h1 id="1e4a4fe7-2313-481f-a4da-900c9a8d19c5" class="">Adaptif Delta Modülasyonu (ADM)</h1><ul id="5bb059e8-2758-4e37-ad70-e59d74ce0d56" class="bulleted-list"><li style="list-style-type:disc">Vericide:</li></ul><figure id="6fc563d8-b8d1-481a-9126-5263a40e29e6" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2021.png"><img style="width:659px" src="Lecture%206%20%20a24e9/Untitled%2021.png"/></a></figure><ul id="9b112b5c-d4bb-4970-a932-f958b1757c7b" class="bulleted-list"><li style="list-style-type:disc">Yetişemediği yerlerde adım boyunu büyütsün, yetiştiği yerlerde adım boyunu küçültsün.<ul id="60838b09-d3a6-47c0-a663-1af647767228" class="bulleted-list"><li style="list-style-type:circle">Bunun için çok düzeyli kuantalayıcı kullanılır.</li></ul><ul id="6d56a603-d950-440c-951c-42e2c5b5a631" class="bulleted-list"><li style="list-style-type:circle">Çok düzeyli iletim görülür.</li></ul></li></ul><p id="cbcb4dfe-fc9f-446c-821b-5d73343fe6c7" class="">
+</p><ul id="7ab12996-b3b5-42f0-b7a1-345e9808403c" class="bulleted-list"><li style="list-style-type:disc">Alıcıda:</li></ul><figure id="63a0526a-11c4-41e6-9a0c-243f76b79c92" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2022.png"><img style="width:431px" src="Lecture%206%20%20a24e9/Untitled%2022.png"/></a></figure><hr id="5cdbc3bb-65a5-43e2-8f5d-2196c3b7657a"/><ul id="36003481-c608-432d-8148-275c945ffd5c" class="bulleted-list"><li style="list-style-type:disc">Örnek:</li></ul><figure id="7c49361b-2c1e-4302-bc87-93b1ab3238bf" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2023.png"><img style="width:548px" src="Lecture%206%20%20a24e9/Untitled%2023.png"/></a></figure><ul id="8823defb-3110-48d5-ba2d-40dd9501113a" class="bulleted-list"><li style="list-style-type:disc">Burada Kuantalama hatası azalmaktadır.</li></ul><p id="bd1cab00-53b8-427a-9d0f-e2f75da89603" class="">
+</p><h3 id="70b68ad9-46ed-458f-849e-3997d8c5ca18" class="">Çok düzeyli iletimin problemi: İkili Kodlama Kullanan ADM</h3><ul id="af3aea7d-9a65-4c10-908d-9e404b91648a" class="bulleted-list"><li style="list-style-type:disc">PCM&#x27;de bahsettiğimiz kanal gürültüsünde hata DM&#x27;ye göre fazla olacaktır.</li></ul><figure id="360c8b92-ae27-436c-9cfd-782135dd126d" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2024.png"><img style="width:613px" src="Lecture%206%20%20a24e9/Untitled%2024.png"/></a></figure><ul id="656d747b-0078-4593-b1ce-13ae9bb20685" class="bulleted-list"><li style="list-style-type:disc">Çok düzeyli iletimde genlik değerleri birbirine daha yakın olacağı için hata oranı daha yüksektir.</li></ul><ul id="b2589c50-00ce-4edd-a21b-a7e2d58bb0aa" class="bulleted-list"><li style="list-style-type:disc">Bu durumu çözebilmek için bu değerleri tekrardan bitlere çeviren bir kodlama gerçekleştirilmektedir.<ul id="ce5d990e-1bc2-4c36-9449-8b10b4c0ffdf" class="bulleted-list"><li style="list-style-type:circle">Buna ise ikili kodlama kullanan ADM denir.</li></ul><ul id="03c74ace-5503-44c3-ab29-74b6731d9acb" class="bulleted-list"><li style="list-style-type:circle">Vericide:</li></ul><figure id="eace7cd2-9a6f-4374-b630-ea5b82ce1605" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2025.png"><img style="width:864px" src="Lecture%206%20%20a24e9/Untitled%2025.png"/></a></figure></li></ul><ul id="e655c27b-2f67-4b59-815d-020643660422" class="bulleted-list"><li style="list-style-type:disc">Kesik kesik çizilmiş sistem de aynı işin alternatif versiyonudur.</li></ul><p id="8d33b585-93c7-425d-8203-c3d70a03b897" class="">
+</p><ul id="9ad3408f-16a5-4421-a9ae-f1d3289431be" class="bulleted-list"><li style="list-style-type:disc">Alıcıda:</li></ul><figure id="141f9571-2a29-4f54-afec-f4c1979a2810" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2026.png"><img style="width:607px" src="Lecture%206%20%20a24e9/Untitled%2026.png"/></a></figure><p id="01c39830-68e0-4125-ae74-b44e9e4970eb" class="">
+</p><h1 id="08a4015b-db9b-407d-9ed0-fa48ddc0de10" class="">Farksal PCM (Differential PCM)</h1><ul id="da93dca2-4ed3-4a64-99ab-1f2656e42f86" class="bulleted-list"><li style="list-style-type:disc">Vericide:</li></ul><figure id="3cad62b9-3b62-42c6-acb2-9f5c13c6be8d" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2027.png"><img style="width:813px" src="Lecture%206%20%20a24e9/Untitled%2027.png"/></a></figure><ul id="51afe03b-ec4d-44da-afae-f18f0d7eeff8" class="bulleted-list"><li style="list-style-type:disc">Klasik PCM&#x27;e göre kuantalayacı düzeyi çok daha az olacaktır.<ul id="eb1ae4e6-4aa8-47ca-8200-bfe6441c7f61" class="bulleted-list"><li style="list-style-type:circle">Bu sebeple gerekli bit sayısı da az olur.</li></ul></li></ul><p id="6123ac53-ed4f-4ff4-8149-0fe06363bf72" class="">
+</p><ul id="98bf0500-3d4c-4679-9d8b-4d178c9a14ed" class="bulleted-list"><li style="list-style-type:disc">Alıcıda:</li></ul><figure id="5d0deec6-eafe-41d9-9899-9049dd87f064" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2028.png"><img style="width:480px" src="Lecture%206%20%20a24e9/Untitled%2028.png"/></a></figure><p id="a2eb3e4a-7785-438b-a8a4-bb625a6d3e87" class="">
+</p><h3 id="05606685-3f67-42c7-b29e-226f80f661b6" class="">Diğer Modülasyonlar karşılaştırma:</h3><figure id="8601ed46-e58d-4ea6-b8fd-79cee60c4aec" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2029.png"><img style="width:480px" src="Lecture%206%20%20a24e9/Untitled%2029.png"/></a></figure><ul id="1c2809d8-79c6-4846-b1ed-fa1009066a4f" class="bulleted-list"><li style="list-style-type:disc">DPCM daha az bant genişliği istemektedir.</li></ul><figure id="16ce3671-6943-4892-9c89-49628b3cc69e" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2030.png"><img style="width:336px" src="Lecture%206%20%20a24e9/Untitled%2030.png"/></a></figure><p id="844f6867-e83f-4d6e-83d0-1c2e2dbe2464" class="">
+</p><h1 id="110d6c28-489f-4c02-a3be-57cd1b5f686d" class="">Sayısal PAM, PDM, PPM</h1><figure id="59f5afac-7d7f-4108-8570-aa81684ce9ab" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2031.png"><img style="width:835px" src="Lecture%206%20%20a24e9/Untitled%2031.png"/></a></figure><ul id="b06de7ec-6c6a-4ec5-a68b-d14b1b6cad53" class="bulleted-list"><li style="list-style-type:disc">Kuantalanmış ayrık değerler şekilde yapılırsa Sayısal halleri elde edilir.</li></ul><p id="d5517236-f2ca-4041-861d-3cef95793c38" class="">
+</p><h2 id="773f14ac-553a-4e0b-a7f4-2647d04d3cfb" class="">Sayısal PAM</h2><figure id="7bfeff67-cb59-4af6-b02d-9a8470e1d616" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2032.png"><img style="width:694px" src="Lecture%206%20%20a24e9/Untitled%2032.png"/></a></figure><p id="bcc3e65b-386f-46dd-8e78-de9931160b22" class="">
+</p><h2 id="1904a094-3ffe-4250-bbf7-ebac25187965" class="">Sayısal PDM</h2><figure id="193fdc5b-b783-4042-85df-8d4db4915bd8" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2033.png"><img style="width:764px" src="Lecture%206%20%20a24e9/Untitled%2033.png"/></a></figure><p id="56ff0277-0585-4155-a1d9-27c8feca2ce0" class="">
+</p><h2 id="7374fc7d-f55a-44ad-9862-c4093e2007d5" class="">Sayısal PPM</h2><figure id="38d59123-4381-46ca-ae3b-d628187f210c" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2034.png"><img style="width:811px" src="Lecture%206%20%20a24e9/Untitled%2034.png"/></a></figure><ul id="6323db10-1288-4673-b22f-9e1700ecb89f" class="bulleted-list"><li style="list-style-type:disc">Gelen bite göre başlangıç noktasına uzaklığı çizilerek bilgi taşınır.</li></ul><p id="f2e974ce-db66-4179-bbf3-08386e32be11" class="">
+</p><h1 id="db0bb6d4-2d20-496f-8aa2-f95d6ef9c2dd" class="">Uygulama</h1><h2 id="059f34c5-444a-4140-bda8-dd0dacfbc3a7" class="">1.</h2><figure id="8b191214-9a97-455c-8944-da5e406c41e1" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2035.png"><img style="width:908px" src="Lecture%206%20%20a24e9/Untitled%2035.png"/></a></figure><h3 id="ac28471a-bb26-48df-99d3-5673ad3ed1bb" class="">a)</h3><figure id="039be5ae-176f-4b36-92b0-691f724861ec" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2036.png"><img style="width:811px" src="Lecture%206%20%20a24e9/Untitled%2036.png"/></a></figure><h3 id="5e42ba6b-8423-40ac-bcbe-e2d0a925dd00" class="">b)</h3><figure id="48354aa3-e0e3-4e86-ba59-07b79b9d2722" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2037.png"><img style="width:891px" src="Lecture%206%20%20a24e9/Untitled%2037.png"/></a></figure><ul id="43bde0d1-a649-436e-9628-64ee12dc6da1" class="bulleted-list"><li style="list-style-type:disc">AC güç ortalamadan ne kadar saptığını verir. (\sigma^2)</li></ul><ul id="9aab04be-fe0b-41b9-83b3-65d59278d556" class="bulleted-list"><li style="list-style-type:disc">DC güç:<figure id="c5a97f41-e232-49cb-9233-0d485bcecfd2" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2038.png"><img style="width:384px" src="Lecture%206%20%20a24e9/Untitled%2038.png"/></a></figure><ul id="d753e4f5-818a-4467-b99d-4ce314abe474" class="bulleted-list"><li style="list-style-type:circle">E[x] değeri 0&#x27;a eşittir çünkü simetrik.<ul id="e11c6640-cee2-4db5-b057-a8e80652a345" class="bulleted-list"><li style="list-style-type:square">DC güç ise bunun karesi olduğu için 0 bulunacaktır.</li></ul></li></ul></li></ul><p id="45838e0c-4aa2-4557-8903-840301a66888" class="">
+</p><figure id="69bd8936-1aa6-42ce-ba75-569ea83e223a" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2039.png"><img style="width:282px" src="Lecture%206%20%20a24e9/Untitled%2039.png"/></a></figure><p id="b82cb896-520d-49ac-85a6-2521e93a8587" class="">
+</p><h3 id="711fc32d-c1f4-47db-8fc0-c39ef5d6d4ae" class="">c) Kuantalanmış işaretin ortalama gücü</h3><figure id="ef0b9712-c8c1-47a3-8a0f-e63ae23ec059" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2040.png"><img style="width:576px" src="Lecture%206%20%20a24e9/Untitled%2040.png"/></a></figure><figure id="b81b642e-3d1a-4a15-b199-4a7c77bf33d3" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2041.png"><img style="width:288px" src="Lecture%206%20%20a24e9/Untitled%2041.png"/></a></figure><p id="2856526e-628b-4d17-8ee6-31140f516155" class="">
+</p><ul id="c027a8ed-9a69-4ecb-9b2c-5944af35e6f2" class="bulleted-list"><li style="list-style-type:disc">Kuantalanmış işaretin gücü ise:<ul id="7e3c8ec8-e89e-4224-8455-5d33335856ba" class="bulleted-list"><li style="list-style-type:circle">İntegral yerine toplam işareti kullanarak hesaplanır.<figure id="7d6a42e5-4d24-45b7-b068-a6d7cbc2fe0e" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2042.png"><img style="width:265px" src="Lecture%206%20%20a24e9/Untitled%2042.png"/></a></figure></li></ul></li></ul><p id="c8bbc6b7-26f7-4626-aada-e3f515951351" class="">
+</p><figure id="961cf811-0e49-4147-9db1-8531251c5061" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2043.png"><img style="width:432px" src="Lecture%206%20%20a24e9/Untitled%2043.png"/></a></figure><ul id="99c37254-d2d5-483a-bc44-e4bb2fc46fb7" class="bulleted-list"><li style="list-style-type:disc">Önemli bir ayrıntı****<ul id="cb2be149-f298-4dff-a7c7-81aa2c2ec183" class="bulleted-list"><li style="list-style-type:circle">Bizim örneğimizde tüm kuantalama düzeylerinin olma olasılığı aynı olduğu için problem yoktur.</li></ul></li></ul><p id="63d849b0-9f5d-4741-bf2d-4106fc17389f" class="">
+</p><figure id="51afc48f-5e77-4038-b6eb-6484b83a4954" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2044.png"><img style="width:841px" src="Lecture%206%20%20a24e9/Untitled%2044.png"/></a></figure><ul id="e2d0ea07-bfa2-4d64-80bf-d233619be9a2" class="bulleted-list"><li style="list-style-type:disc">Kuantalama sonucunda işaretin gücü azalmıştır.</li></ul><p id="b8195fe2-c3b6-4ea4-98f2-f3a189942a40" class="">
+</p><h3 id="6632e28c-1781-47e4-8abc-73c17cd6c303" class="">d) Kuantalama Gürültüsünün Ortalama Gücü</h3><figure id="dfa4afcc-dc1d-4f16-9561-0d9735b9e4aa" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2045.png"><img style="width:559px" src="Lecture%206%20%20a24e9/Untitled%2045.png"/></a></figure><figure id="124e6de9-0412-40f3-9b1c-7bfe3b853d77" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2046.png"><img style="width:277px" src="Lecture%206%20%20a24e9/Untitled%2046.png"/></a></figure><figure id="1140cf68-3ac0-4066-aad6-185320217b28" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2047.png"><img style="width:868px" src="Lecture%206%20%20a24e9/Untitled%2047.png"/></a></figure><ul id="b563925a-8a92-4636-8ee2-93837ef2b9f0" class="bulleted-list"><li style="list-style-type:disc">Geçen haftaki örnekte hesaplanan kuantalama gürültüsü ile karşılaştır.</li></ul><p id="caf73233-6a90-4376-a574-4668b9f7ba57" class="">
+</p><h3 id="c4e58493-6da9-401e-87c8-e72dc4fc5c88" class="">e) Gerekli Bit Sayısı ve 0-1&#x27;lerin üretilme olasılığı</h3><figure id="b89388b3-3a21-415f-9961-4b1d0a104f26" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2048.png"><img style="width:835px" src="Lecture%206%20%20a24e9/Untitled%2048.png"/></a></figure><p id="94e1c796-6545-46f8-8c89-a48cc5b634c4" class="">
+</p><h2 id="bc132534-2e74-4e68-ba1d-240cbef84f15" class="">2.</h2><figure id="e514e57d-49b8-421a-9118-d91fb4f78b71" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2049.png"><img style="width:909px" src="Lecture%206%20%20a24e9/Untitled%2049.png"/></a></figure><ul id="dc226e96-e7e6-4831-b434-3e8694ad2d99" class="bulleted-list"><li style="list-style-type:disc">s=0.02V.</li></ul><p id="276ff560-94e9-4451-96b7-d029364c3eba" class="">
+</p><h3 id="93876f4b-fcff-429a-aa82-5e82e1274504" class="">x(t) ile x_şapka(t):</h3><figure id="f7faf1f7-12a7-4fe5-8b49-3fe0274030f9" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2050.png"><img style="width:740px" src="Lecture%206%20%20a24e9/Untitled%2050.png"/></a></figure><ul id="ccaa40c2-15c7-443d-a8b3-49096e99017c" class="bulleted-list"><li style="list-style-type:disc">Düzeyli bir kuantalama olmaktadır dikkat.</li></ul><ul id="1c829bf0-0172-4cbf-9dfd-7ad194401b11" class="bulleted-list"><li style="list-style-type:disc">x_şapka(t) ile x(t) işareti arasındaki fark düzeyli kuantalama grafiğinde giriş olarak alınmaktadır.<ul id="340e8307-efeb-491f-8099-0fb198ba3131" class="bulleted-list"><li style="list-style-type:circle">Bu düzeyli kuantalama grafiğinde bu girişe denk çıkış ise x_şapka(t)&#x27;nin bir sonraki değerini belirler.</li></ul></li></ul><p id="6043de09-2f2a-4834-a971-43849575e656" class="">
+</p><h3 id="cbc66a96-8c7c-4228-98ff-2e7ca756d62e" class="">x_s(t):</h3><figure id="6cccb44c-e99b-4e77-bbd3-b90cbdea1610" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2051.png"><img style="width:753px" src="Lecture%206%20%20a24e9/Untitled%2051.png"/></a></figure><p id="8ef0d449-0216-46f9-845f-6b7c32f4d289" class="">
+</p><h3 id="b0b5afb5-347b-4457-a255-65b7393d4857" class="">x_c(t):</h3><figure id="ce8eba87-7e18-4de6-9155-54d55676f7de" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2052.png"><img style="width:859px" src="Lecture%206%20%20a24e9/Untitled%2052.png"/></a></figure><p id="d13d2361-b1c3-45cd-9a23-f8de2d081be2" class="">
+</p><h3 id="cbb347b2-ddf6-49f6-bbc7-b439d3d5b62d" class="">Demodülatör diyagramı</h3><figure id="556a6d2f-bc99-4413-bbbc-8ce7156fd27e" class="image"><a href="Lecture%206%20%20a24e9/Untitled%2053.png"><img style="width:785px" src="Lecture%206%20%20a24e9/Untitled%2053.png"/></a></figure><p id="f79c381c-2e9e-4d73-9282-bddc4333a45b" class="">
+</p></div></article></body></html>

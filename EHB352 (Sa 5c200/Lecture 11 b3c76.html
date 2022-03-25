@@ -1,0 +1,706 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lecture 11 (20.05.21) [BASK, BFSK]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b3c760b8-a72e-46da-954d-271a4c531ac1" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🕚</span></div><h1 class="page-title">Lecture 11 (20.05.21) [BASK, BFSK]</h1></header><div class="page-body"><nav id="42565abc-186f-49fb-8f32-4d47bcd6e251" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#de523593-2c61-4d3f-8cb4-4f86cdc0cc94">Band Geçiren Sayısal İletim</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d1e7b082-884b-4356-a75e-d449bbab0f67">İkili Genlik Kaydırmalı Anahtarlama (BASK = 2-ASK)(OOK)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1704ed1e-5d0e-4430-b091-417bb3e0ba42">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e601be58-bc24-4e34-b104-817ca82a831a">s(t)&#x27;lerin Enerjisi (güzel bir öğrenci sorusu)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1ac252bb-8325-4338-8037-8d6fd79a416c">Alıcı kısımda uyumlu süzgeç kullanılırsa:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7b7ed40c-03fd-4773-ad71-8be9dd3f0d02">Vericiden s_i(t) iletildiğinde gürültü olmasa;</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#dfbbff7d-e730-4a89-9ef5-bf550d8e79b0">Karar devresi girişine gelen gürültünün gücü:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9e6af300-41f4-4cf1-a404-9988f0c1d12f">Alıcı kısımda ilişkili alıcı da kullanılabilir:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#75c82b60-932c-4532-8641-fc5c5d59d212">Hata olasılığı hesabı:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e0b6096b-a5fd-4789-abdb-4330ce74154d">BASK işaretler eşzamanlı olmayan biçimde de çözülebilir:</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f57f38fc-6f37-4e29-a127-57260f28691a">İkili Frekans Kaydırmalı Anahtarlama (BFSK)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f2159eb1-bddc-4e8d-b55b-149a06e61050">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f507439a-7233-4acb-a3bf-6b4dd22dd741">Enerjiyi incelemek istersek:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#451934ed-0c7b-4405-8749-70de08e0d2a2">Ortalama enerji:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f6489a72-a7f1-420e-9f4c-577abc587a65">Bandverimliliği:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3fd0824d-20a6-498d-a4e7-9e42de6c9f75">Alıcı devresi:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0456b3b0-6c24-4426-9983-9f4afa1403c3">Gürültünün gücü:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#bd9ab04a-f8df-4da5-a9c4-40ed7de24ef6">Hata Olasılığı:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#adf1984b-fed9-4d40-9f85-d5d1e71aec2c">Eğer tek bir süzgeç ile yapılmak istense?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#03f9271f-3ad7-4e35-95a0-24ea16ecd8d9">Uygulama</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5916b2fd-c4bc-4952-ab81-3954d89631cb">1.</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f2b37de4-4e49-4c6e-a41b-45258ff10613">a)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9a9df14f-5657-4158-a0b5-8c2df74de79f">b)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a597e1d7-d8dc-458a-be88-2d0f7a83a828">c)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c52407c9-a011-4011-932c-ce4c0c04c1e6">NOT:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#14fac229-98dd-4b33-ae89-f19ac4d226f6">d)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1c134061-d9b9-434a-b9bc-59bb992e3fba">e)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3a3b6d6a-9fd4-4951-82a8-da705228c1d2">f) artık gürültü dahil oldu.</a></div></nav><h1 id="de523593-2c61-4d3f-8cb4-4f86cdc0cc94" class="">Band Geçiren Sayısal İletim</h1><figure id="434f902c-65d9-4e56-8af1-9e5e358c4d29" class="image"><a href="Lecture%2011%20b3c76/Untitled.png"><img style="width:386px" src="Lecture%2011%20b3c76/Untitled.png"/></a></figure><ol type="1" id="07852f9f-1728-4dd2-84e0-2debb7df356b" class="numbered-list" start="1"><li>Anahtar pozisyonunu kaydırarak genlikler değiştiriliyor → Genlik Kaydırmalı Anahtarlama</li></ol><ol type="1" id="ce51d9e3-a2cb-4430-a19b-fe49fd803d89" class="numbered-list" start="2"><li>Anahtar pozisyonunu kaydırarak frekanslar değiştiriliyor → Frekans Kaydırmalı Anahtarlama</li></ol><ol type="1" id="1f54692a-b9ba-4fcc-bc18-5fb7f1176368" class="numbered-list" start="3"><li>Anahtar pozisyonunu kaydırarak fazlar değiştiriliyor → Faz Kaydırmalı Anahtarlama</li></ol><p id="6118eae8-a79c-446b-ae12-7e2df553af98" class="">
+</p><figure id="0fd31a6c-d564-4516-b086-b7fc35fa0d43" class="image"><a href="Lecture%2011%20b3c76/Untitled%201.png"><img style="width:477px" src="Lecture%2011%20b3c76/Untitled%201.png"/></a></figure><p id="eec8b319-e3b9-4b79-bf0b-c3cf43dc6cf1" class="">
+</p><h2 id="d1e7b082-884b-4356-a75e-d449bbab0f67" class="">İkili Genlik Kaydırmalı Anahtarlama (BASK = 2-ASK)(OOK)</h2><figure id="ad0cb767-6565-46e0-913f-8e2a3139630f" class="image"><a href="Lecture%2011%20b3c76/Untitled%202.png"><img style="width:834px" src="Lecture%2011%20b3c76/Untitled%202.png"/></a></figure><figure id="dca128e4-2ebf-490a-bb9e-39cdc5dc1bc4" class="image"><a href="Lecture%2011%20b3c76/Untitled%203.png"><img style="width:487px" src="Lecture%2011%20b3c76/Untitled%203.png"/></a></figure><ul id="68a160a7-8399-4319-9fb2-6e6cd9b06f45" class="bulleted-list"><li style="list-style-type:disc">&quot;0&quot; biti geldiğinde ground çıkışa gider,</li></ul><ul id="1bae3072-243e-4875-bd36-e217197b824e" class="bulleted-list"><li style="list-style-type:disc">&quot;1&quot; biti geldiğinde aşağıda görülen işareti çıkışa ver.</li></ul><p id="a9355ae8-4443-4d0d-a366-3113bfbf777b" class="">
+</p><ul id="3978dfdb-305e-4355-9d52-ed29a5f6e6eb" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">f_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> taşıyıcı frekansı <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mi>T</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac1T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span>&#x27;nin tam katı olarak seçilir.</li></ul><ul id="a86fb6cb-c3d6-4bf4-802e-8b4e67998538" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>g</mi><mi>T</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>:</mo></mrow><annotation encoding="application/x-tex">g_T(t): </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span></span><span>﻿</span></span> darbe şekillendirme fonksiyonu</li></ul><p id="ce5872b6-5832-4e85-bab1-864fc390c137" class="">
+</p><h3 id="1704ed1e-5d0e-4430-b091-417bb3e0ba42" class="">Örnek:</h3><figure id="08badc58-372d-4c20-b080-f2471e664194" class="image"><a href="Lecture%2011%20b3c76/Untitled%204.png"><img style="width:818px" src="Lecture%2011%20b3c76/Untitled%204.png"/></a></figure><p id="79d80418-13fd-463a-98a1-e940c6e9a889" class="">
+</p><h3 id="e601be58-bc24-4e34-b104-817ca82a831a" class="">s(t)&#x27;lerin Enerjisi (güzel bir öğrenci sorusu)</h3><figure id="70ff9dce-2e9a-446e-93d3-eb0d7884a700" class="image"><a href="Lecture%2011%20b3c76/Untitled%205.png"><img style="width:895px" src="Lecture%2011%20b3c76/Untitled%205.png"/></a></figure><ul id="00e21c5f-e2f4-4141-804c-aedbf9bbda88" class="bulleted-list"><li style="list-style-type:disc">M=2 olduğu için bit başına harcanan enerji ile ortalama simge enerjisi eşittir.</li></ul><ul id="0ec3e4dc-27a8-49a0-b823-9214a7b70fd7" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mfrac><mi>R</mi><mi>B</mi></mfrac></mrow><annotation encoding="application/x-tex">\gamma=\frac RB</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.217331em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.00773em;">R</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span> = iletim hızı/band genişliği.</li></ul><p id="2975c72b-e608-4ee7-8f08-78d410e5ed81" class="">
+</p><h3 id="1ac252bb-8325-4338-8037-8d6fd79a416c" class="">Alıcı kısımda uyumlu süzgeç kullanılırsa:</h3><figure id="cebf3750-1293-46b5-836a-00e2eacedcf5" class="image"><a href="Lecture%2011%20b3c76/Untitled%206.png"><img style="width:811px" src="Lecture%2011%20b3c76/Untitled%206.png"/></a></figure><figure id="66a33e80-a837-494e-8713-d1d3db116226" class="image"><a href="Lecture%2011%20b3c76/Untitled%207.png"><img style="width:737px" src="Lecture%2011%20b3c76/Untitled%207.png"/></a></figure><p id="db27e716-8ad1-43fc-9a3d-36c9212558e1" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="3e5a50d7-7a78-4b6a-b7f7-ea2636b94670"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Temelbanddaki bütün teori burda da kullanılabilmektedir; ta ki yüksek frekansları işaretlere dikkat etme kaydı ile.</div></figure><h3 id="7b7ed40c-03fd-4773-ad71-8be9dd3f0d02" class="">Vericiden s_i(t) iletildiğinde gürültü olmasa;</h3><ul id="2cb29d29-fd49-41f0-b6f3-7fe22113aa57" class="bulleted-list"><li style="list-style-type:disc">Karar devresi girişinde görülecek değeri V_i ile gösterelim:</li></ul><figure id="edf7390e-e2e1-4bb2-8250-5ffb6603c92f" class="image"><a href="Lecture%2011%20b3c76/Untitled%208.png"><img style="width:926px" src="Lecture%2011%20b3c76/Untitled%208.png"/></a></figure><p id="f549f3e0-b3a0-4feb-af71-ffba59b147a3" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="04c95c7f-a2a1-40a5-8538-739ae23e5a65"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Buradaki hata olasılığı hesabı temelbanddaki ile aynı.</div></figure><p id="091570d4-2f26-4b35-ac51-1a0c8a4410fb" class="">
+</p><h3 id="dfbbff7d-e730-4a89-9ef5-bf550d8e79b0" class="">Karar devresi girişine gelen gürültünün gücü:</h3><figure id="2c8a6853-1faf-4754-9fe0-f8e8a9ff0b1c" class="image"><a href="Lecture%2011%20b3c76/Untitled%209.png"><img style="width:264px" src="Lecture%2011%20b3c76/Untitled%209.png"/></a></figure><ul id="0c64b724-9071-43c3-8ae4-b6c5ac1888a8" class="bulleted-list"><li style="list-style-type:disc">gürültünün gücü+uyumlu olan işaretin gücü.</li></ul><p id="f1b831a5-49ff-4936-85c8-45bb33c2a7fe" class="">
+</p><h3 id="9e6af300-41f4-4cf1-a404-9988f0c1d12f" class="">Alıcı kısımda ilişkili alıcı da kullanılabilir:</h3><figure id="235b1288-f346-4223-84c6-b84ef5f85b5f" class="image"><a href="Lecture%2011%20b3c76/Untitled%2010.png"><img style="width:562px" src="Lecture%2011%20b3c76/Untitled%2010.png"/></a></figure><figure id="bdf25619-a86d-41e1-bc40-f3624ea4fe24" class="image"><a href="Lecture%2011%20b3c76/Untitled%2011.png"><img style="width:384px" src="Lecture%2011%20b3c76/Untitled%2011.png"/></a></figure><p id="82d68086-edba-49d9-8c83-12b0a51f9880" class="">
+</p><h3 id="75c82b60-932c-4532-8641-fc5c5d59d212" class="">Hata olasılığı hesabı:</h3><ul id="02c60487-c7e0-4ee7-9e42-00dd4c0389d3" class="bulleted-list"><li style="list-style-type:disc">Temelbanddaki ile aynı işlemlerle yapılır.</li></ul><figure id="a7a5bd1e-9fee-4c83-91c3-0aa857a69aee" class="image"><a href="Lecture%2011%20b3c76/Untitled%2012.png"><img style="width:304px" src="Lecture%2011%20b3c76/Untitled%2012.png"/></a></figure><ul id="15df5608-8021-42b7-b829-9b4c19b070d8" class="bulleted-list"><li style="list-style-type:disc">Hatırlarsak ↑</li></ul><p id="ffc16d8f-a4b8-4f46-87da-c743c94850e4" class="">
+</p><figure id="1503f547-825c-42e3-9de6-c36b036c2249" class="image"><a href="Lecture%2011%20b3c76/Untitled%2013.png"><img style="width:738px" src="Lecture%2011%20b3c76/Untitled%2013.png"/></a></figure><p id="d2236ac2-3800-4526-a007-e8074b128950" class="">
+</p><ul id="0b2321f2-48af-4072-9436-7d8e842e25e4" class="bulleted-list"><li style="list-style-type:disc">Olasılıkların aynı olduğu özel durum için incelersek:</li></ul><figure id="c5f1ae19-90bd-4ea1-ba99-6524d8d09b1a" class="image"><a href="Lecture%2011%20b3c76/Untitled%2014.png"><img style="width:750px" src="Lecture%2011%20b3c76/Untitled%2014.png"/></a></figure><p id="e81e7eb2-23ad-43a3-a9e6-f93b0e1e2ae1" class="">
+</p><h3 id="e0b6096b-a5fd-4789-abdb-4330ce74154d" class="">BASK işaretler eşzamanlı olmayan biçimde de çözülebilir:</h3><figure id="40fbe6f2-1701-4fec-bee9-1205000d27e4" class="image"><a href="Lecture%2011%20b3c76/Untitled%2015.png"><img style="width:844px" src="Lecture%2011%20b3c76/Untitled%2015.png"/></a></figure><p id="64364ca9-6f6b-49d9-9f43-e88a4a9cee9e" class="">
+</p><h2 id="f57f38fc-6f37-4e29-a127-57260f28691a" class="">İkili Frekans Kaydırmalı Anahtarlama (BFSK)</h2><ul id="4773bc2e-a7b5-40ce-9337-ae68d1cce0e6" class="bulleted-list"><li style="list-style-type:disc">İki ayrı frekans değerli işaretler kullanılır.</li></ul><p id="faf21fe1-8447-4dc3-9e60-1f0ba0060799" class="">
+</p><figure id="fe8126b0-dc28-4278-9a22-6bc49fa51090" class="image"><a href="Lecture%2011%20b3c76/Untitled%2016.png"><img style="width:704px" src="Lecture%2011%20b3c76/Untitled%2016.png"/></a></figure><ul id="9e01751b-af2e-470a-a5c2-63b312335b16" class="bulleted-list"><li style="list-style-type:disc">&quot;1&quot; biti için <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">w_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> frekanslı işaret kullanılırken,</li></ul><ul id="6ff69f65-2b49-4741-8a2b-d156dab902b8" class="bulleted-list"><li style="list-style-type:disc">&quot;0&quot; biti için <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">w_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> frekanslı işaret kullanılır.</li></ul><p id="44ecb62f-3ad3-4494-be52-093871309dfb" class="">
+</p><ul id="4699d445-e35e-4b71-9b0d-75b518623eba" class="bulleted-list"><li style="list-style-type:disc">buradaki <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_i(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>&#x27;ler ilk kez birbirleri cinsinden lineer şekilde yazılamamaktadır.<ul id="e6d4b170-972d-408d-bc42-e3a3cf7e231a" class="bulleted-list"><li style="list-style-type:circle">Bu ana kadar bu <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_i(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>&#x27;ler birbiri cinsinden yazılabilmekteydi.</li></ul></li></ul><p id="8c5cde70-6f5e-40b6-aa7d-a7e74982af54" class="">
+</p><figure id="86c9bfcb-1d87-45cf-b147-38eec9b4e629" class="image"><a href="Lecture%2011%20b3c76/Untitled%2017.png"><img style="width:653px" src="Lecture%2011%20b3c76/Untitled%2017.png"/></a></figure><ul id="da47cec6-981e-45d3-b7f7-4c9d6c0a3bb4" class="bulleted-list"><li style="list-style-type:disc">Diklik ve süreklilik durumlarından ve Sunda&#x27;nın FSK&#x27;sı özel durumundan bahsedildi ↑.</li></ul><p id="d53a4a64-b365-427e-a473-f85e31edc933" class="">
+</p><h3 id="f2159eb1-bddc-4e8d-b55b-149a06e61050" class="">Örnek:</h3><figure id="b8cdec67-b6e8-46fb-b092-824073a4d704" class="image"><a href="Lecture%2011%20b3c76/Untitled%2018.png"><img style="width:572px" src="Lecture%2011%20b3c76/Untitled%2018.png"/></a></figure><ul id="f90eee94-a2e3-4ffe-bc66-d526ff268329" class="bulleted-list"><li style="list-style-type:disc">&quot;101&quot; bit dizisi gönderilmek istendiğinde:<ul id="9aff7d4c-32c4-482c-bd39-a5f241363a4a" class="bulleted-list"><li style="list-style-type:circle">&quot;1&quot; bitine karşılık gelen <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">f_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> frekanslı işaret kullanılarak,</li></ul><ul id="6c76f530-1cc8-4d47-8aad-ec4eae9ca40a" class="bulleted-list"><li style="list-style-type:circle">&quot;0&quot; bitine karşılık gelen <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">f_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> frekanslı işaret kullanılarak,</li></ul><ul id="eddf4fda-1846-4f77-9c47-b149349bd709" class="bulleted-list"><li style="list-style-type:circle">iletim gerçekleştirilmiştir.</li></ul></li></ul><p id="c6d53acd-d853-4272-bd81-c33394565a3e" class="">
+</p><h3 id="f507439a-7233-4acb-a3bf-6b4dd22dd741" class="">Enerjiyi incelemek istersek:</h3><figure id="61f0502a-039a-48d7-b7a2-5f34c46481b5" class="image"><a href="Lecture%2011%20b3c76/Untitled%2019.png"><img style="width:430px" src="Lecture%2011%20b3c76/Untitled%2019.png"/></a></figure><p id="8545aff9-2cf6-413c-b42b-65d056f13201" class="">
+</p><h3 id="451934ed-0c7b-4405-8749-70de08e0d2a2" class="">Ortalama enerji:</h3><figure id="ea17bbc4-25e7-4530-91e6-5f02c1115a3a" class="image"><a href="Lecture%2011%20b3c76/Untitled%2020.png"><img style="width:393px" src="Lecture%2011%20b3c76/Untitled%2020.png"/></a></figure><p id="d8a4f399-7748-4a81-b749-347bb950a2ba" class="">
+</p><h3 id="f6489a72-a7f1-420e-9f4c-577abc587a65" class="">Bandverimliliği:</h3><figure id="bec29b90-b99f-4ca5-920d-230655302133" class="image"><a href="Lecture%2011%20b3c76/Untitled%2021.png"><img style="width:795px" src="Lecture%2011%20b3c76/Untitled%2021.png"/></a></figure><ul id="800661f5-9b76-490e-8d18-32dc5a5ffd85" class="bulleted-list"><li style="list-style-type:disc">BASK&#x27;da olduğu gibi T sürede bir bit iletiliyor.</li></ul><ul id="239b23f8-11b9-4115-b8e8-453952481696" class="bulleted-list"><li style="list-style-type:disc">Sağ tarafta güç spektral yoğunluğu görülmektedir.<ul id="6f0ece40-f9b8-4dd8-9d9c-707b1f1b485f" class="bulleted-list"><li style="list-style-type:circle">Farklı frekanslarda yapılan iletimden dolayı, iletim band genişliği artar.</li></ul><ul id="28ca8775-84b1-44e0-ad9a-45fa8eb4ae17" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">f_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> ve <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">f_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> frekansları birbirine olabildiğince yakın seçilir ki tek bir işaretmiş gibi güç spektral yoğunlukları sürekliymiş gibi olsun, daha az yer kaplansın.</li></ul></li></ul><p id="16b03d73-611d-429d-b09b-41789614080c" class="">
+</p><h3 id="3fd0824d-20a6-498d-a4e7-9e42de6c9f75" class="">Alıcı devresi:</h3><figure id="01d72742-3dd2-4a27-b3ac-710ccdb9db97" class="image"><a href="Lecture%2011%20b3c76/Untitled%2022.png"><img style="width:670px" src="Lecture%2011%20b3c76/Untitled%2022.png"/></a></figure><ul id="a715806e-984b-4ed4-b8b2-08d9c7dab28d" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_i(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>&#x27;ler birbiri cinsinden yazılamadığı için <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_i(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> miktarı kadar uyumlu süzgeç kullanmak zorunda kalırız.<ul id="65407486-4383-4bc1-ac33-93eb41cc4fd5" class="bulleted-list"><li style="list-style-type:circle">Uyumlu süzgeçler paralel bir şekilde bağlanmalıdır.</li></ul></li></ul><p id="b6da81df-b553-4198-97b5-73b1042197bf" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="831a7fcb-4036-4f5e-b874-df2725b4f96f"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Vi&#x27;ler vericiden s_i(t) iletildiğinde karar devresi girişinde görülen değerler.</div></figure><ul id="99fe8800-7ac9-4672-84df-3bdc4f1841af" class="bulleted-list"><li style="list-style-type:disc">Hesaplayalım:</li></ul><figure id="cdb3bb45-47b6-4235-ba0e-ab75a148ed9f" class="image"><a href="Lecture%2011%20b3c76/Untitled%2023.png"><img style="width:654px" src="Lecture%2011%20b3c76/Untitled%2023.png"/></a></figure><figure id="448b2260-658c-40da-8979-21bfa0a8edbd" class="image"><a href="Lecture%2011%20b3c76/Untitled%2024.png"><img style="width:419px" src="Lecture%2011%20b3c76/Untitled%2024.png"/></a></figure><ul id="dcd239f4-0043-4a37-a2b5-bc247d2c6304" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>0</mn></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_0(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> iletildiği zaman karar devresi girişinde E_0 görülür.<ul id="0c8801a0-318b-4115-9a12-5621f9fcf6e2" class="bulleted-list"><li style="list-style-type:circle">s_1(t), s_0(t)&#x27;ye dik olduğu için s_1(t)&#x27;nin uyumlu süzgeçinden 0 gelir.</li></ul><ul id="28ee4814-09b7-4670-8a2a-4be3095b7988" class="bulleted-list"><li style="list-style-type:circle">O yüzden sadece s_0(t)&#x27;nin enerjisi? olan E_0 görülür.</li></ul></li></ul><ul id="722fd06a-9dc0-4594-b4b4-9ce000055271" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_1(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> &quot;-&quot; olarak toplandığı için ise karar devresi girişinde -E_1 görülür.</li></ul><p id="16005ecf-6867-4f8d-a5d5-71bdc9f3e639" class="">
+</p><h3 id="0456b3b0-6c24-4426-9983-9f4afa1403c3" class="">Gürültünün gücü:</h3><figure id="c0e65578-c318-42fa-a3fc-d0ed8c342077" class="image"><a href="Lecture%2011%20b3c76/Untitled%2025.png"><img style="width:582px" src="Lecture%2011%20b3c76/Untitled%2025.png"/></a></figure><figure id="3e6632e5-4092-4e9d-ba0e-d801ac6435f8" class="image"><a href="Lecture%2011%20b3c76/Untitled%2026.png"><img style="width:490px" src="Lecture%2011%20b3c76/Untitled%2026.png"/></a></figure><ul id="ee4c3c6a-f259-4bab-bc19-9a7a4fb0b6df" class="bulleted-list"><li style="list-style-type:disc">Gürültü de iki ayrı süzgeçten geçerek örneklenmektedir.<ul id="d4ec432b-35c6-4681-a6ef-80d2876b2789" class="bulleted-list"><li style="list-style-type:circle">Bu yüzden bir toplama gerçekleşir.</li></ul></li></ul><p id="49883a9f-9577-4ec7-80b8-09c633352d17" class="">
+</p><figure id="fda3fb31-c7c9-4469-aa7a-611e0d6bd053" class="image"><a href="Lecture%2011%20b3c76/Untitled%2027.png"><img style="width:670px" src="Lecture%2011%20b3c76/Untitled%2027.png"/></a></figure><p id="cd66d1e8-5f09-454c-a8a3-384ef09eab31" class="">
+</p><h3 id="bd9ab04a-f8df-4da5-a9c4-40ed7de24ef6" class="">Hata Olasılığı:</h3><figure id="069d979e-0d9f-4718-9ddd-853b7e12d0e5" class="image"><a href="Lecture%2011%20b3c76/Untitled%2028.png"><img style="width:586px" src="Lecture%2011%20b3c76/Untitled%2028.png"/></a></figure><hr id="9cb3e473-edaf-4461-aef5-b0480dc5dce9"/><p id="84a551b5-2397-42aa-a56b-2e4012d90c85" class="">
+</p><figure id="a7312a45-b04c-424e-bceb-0009414fc8c3" class="image"><a href="Lecture%2011%20b3c76/Untitled%2029.png"><img style="width:611px" src="Lecture%2011%20b3c76/Untitled%2029.png"/></a></figure><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="76da1ba2-96ca-4dd5-b651-190df44e2cab"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Bir tane BFSK işaret 2 tane BASK işareti olarak yazılabilir.</div></figure><ul id="d048abe9-e36f-42a0-918e-96d4e3c9ba4e" class="bulleted-list"><li style="list-style-type:disc">Bu blok diagramında bu durumdan bahsedilmiştir.</li></ul><ul id="18bf4194-fed8-40cb-812b-2f28db10320d" class="bulleted-list"><li style="list-style-type:disc">Daha basit ama performansı daha düşük.</li></ul><p id="63328002-0342-4b45-a91e-d3c27d51346a" class="">
+</p><h3 id="adf1984b-fed9-4d40-9f85-d5d1e71aec2c" class="">Eğer tek bir süzgeç ile yapılmak istense?</h3><figure id="b83922cc-32b1-49fe-89d2-e99a9cfdef8f" class="image"><a href="Lecture%2011%20b3c76/Untitled%2030.png"><img style="width:699px" src="Lecture%2011%20b3c76/Untitled%2030.png"/></a></figure><ul id="a202c644-cce7-43d8-bb45-de19ea7100f6" class="bulleted-list"><li style="list-style-type:disc">Düz mantık ile s_0 ve s_1&#x27;ye uyumlu süzgeçlerin farkları olan süzgeç kullanılır.</li></ul><p id="b404714f-3459-42b1-a515-2a41aa4628ff" class="">
+</p><h1 id="03f9271f-3ad7-4e35-95a0-24ea16ecd8d9" class="">Uygulama</h1><h2 id="5916b2fd-c4bc-4952-ab81-3954d89631cb" class="">1.</h2><figure id="2906bfda-1f3c-44ae-91d7-7076356a3703" class="image"><a href="Lecture%2011%20b3c76/Untitled%2031.png"><img style="width:879px" src="Lecture%2011%20b3c76/Untitled%2031.png"/></a></figure><ul id="10a20df3-b22f-4ccf-9ea7-87663ba147df" class="bulleted-list"><li style="list-style-type:disc">Bir modülasyon aralığı 0-T aralığıdır.</li></ul><h3 id="f2b37de4-4e49-4c6e-a41b-45258ff10613" class="">a)</h3><figure id="e65d564a-2b59-45de-a025-5a6ee8e8fc5c" class="image"><a href="Lecture%2011%20b3c76/Untitled%2032.png"><img style="width:807px" src="Lecture%2011%20b3c76/Untitled%2032.png"/></a></figure><figure id="355a891b-90f7-42f1-9201-af42cd6d5a9a" class="image"><a href="Lecture%2011%20b3c76/Untitled%2033.png"><img style="width:899px" src="Lecture%2011%20b3c76/Untitled%2033.png"/></a></figure><ul id="25f13150-b9ce-47ed-814f-70b95974c0a9" class="bulleted-list"><li style="list-style-type:disc">Verilen <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>g</mi><mi>T</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_1(t)=g_T(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> eşitliği ile tüm bit çiftlerine karşılık gelen işaretler çizildi.<ul id="a27ced0b-e363-428b-b929-e2feb3de3526" class="bulleted-list"><li style="list-style-type:circle">Bu çizilen işaretlerin katsayısı olan <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">a_n </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> ise verici süzgeçindeki fonksiyonun katsayısıdır.</li></ul><ul id="d0ae9b67-768f-4764-9e59-9ed50c33987a" class="bulleted-list"><li style="list-style-type:circle">Bu yüzen <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">a_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>&#x27;leri belirtebiliriz.</li></ul></li></ul><p id="196559e5-c59b-4d99-ad15-ef215e2f594b" class="">
+</p><h3 id="9a9df14f-5657-4158-a0b5-8c2df74de79f" class="">b)</h3><figure id="c62b49cf-15ab-4172-a0f4-f30cddfb69f4" class="image"><a href="Lecture%2011%20b3c76/Untitled%2034.png"><img style="width:786px" src="Lecture%2011%20b3c76/Untitled%2034.png"/></a></figure><figure id="f0fd7312-940e-4978-9e50-8cb109fb4ae0" class="image"><a href="Lecture%2011%20b3c76/Untitled%2035.png"><img style="width:837px" src="Lecture%2011%20b3c76/Untitled%2035.png"/></a></figure><ul id="ab37b3f8-e57d-45d8-a9e7-73cc4de5c810" class="bulleted-list"><li style="list-style-type:disc">Önce <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span></span></span></span></span><span>﻿</span></span>&#x27;lerin güçlerini kareli integral formülü ile hesaplıyorum.</li></ul><p id="85a38fd8-93e1-402d-8ebe-6099ff1287f9" class="">
+</p><figure id="3dcd4a26-6f3b-47f2-8fce-4de8f3335fe4" class="image"><a href="Lecture%2011%20b3c76/Untitled%2036.png"><img style="width:334px" src="Lecture%2011%20b3c76/Untitled%2036.png"/></a></figure><ul id="d287c2c7-e2d7-400f-8707-810b741cd7d4" class="bulleted-list"><li style="list-style-type:disc">Simge başına harcanan ortalama enerji hesabında ise (her simgenin enerjisi/simge sayısı) işlemi kullanılır.</li></ul><p id="e71a443a-dddd-4ef6-a58a-67372ddb093a" class="">
+</p><figure id="e6070f7a-33d6-487e-93f1-0acb621f0e06" class="image"><a href="Lecture%2011%20b3c76/Untitled%2037.png"><img style="width:304px" src="Lecture%2011%20b3c76/Untitled%2037.png"/></a></figure><ul id="e5bf426b-8427-444f-a227-063036f1a9fd" class="bulleted-list"><li style="list-style-type:disc">Bir sembolde 2 bit olduğu için bu şekilde çıkar.</li></ul><p id="029d4862-cb56-4d3b-be26-cc632e05b4e1" class="">
+</p><h3 id="a597e1d7-d8dc-458a-be88-2d0f7a83a828" class="">c)</h3><figure id="938750fa-dca5-4611-9102-8594112c470f" class="image"><a href="Lecture%2011%20b3c76/Untitled%2038.png"><img style="width:780px" src="Lecture%2011%20b3c76/Untitled%2038.png"/></a></figure><figure id="25f4dbec-1dae-43dd-9887-c5799f318f3a" class="image"><a href="Lecture%2011%20b3c76/Untitled%2039.png"><img style="width:459px" src="Lecture%2011%20b3c76/Untitled%2039.png"/></a></figure><p id="315ab4b5-aae4-40a8-9031-0683fed4f43e" class="">
+</p><h3 id="c52407c9-a011-4011-932c-ce4c0c04c1e6" class="">NOT:</h3><figure id="1e2f066a-bda3-4d38-b157-bb137f40be33" class="image"><a href="Lecture%2011%20b3c76/Untitled%2040.png"><img style="width:598px" src="Lecture%2011%20b3c76/Untitled%2040.png"/></a></figure><h3 id="14fac229-98dd-4b33-ae89-f19ac4d226f6" class="">d)</h3><figure id="31f5e2d7-2c4b-44ff-92a5-6a94e19592fd" class="image"><a href="Lecture%2011%20b3c76/Untitled%2041.png"><img style="width:818px" src="Lecture%2011%20b3c76/Untitled%2041.png"/></a></figure><figure id="b060eaaf-bcab-47f2-af4d-bcadf66d4b15" class="image"><a href="Lecture%2011%20b3c76/Untitled%2042.png"><img style="width:562px" src="Lecture%2011%20b3c76/Untitled%2042.png"/></a></figure><p id="b2f9af46-6e0d-4644-82dd-1de1d8302b09" class="">
+</p><ul id="b8cc7fc3-c4ab-4486-b3cf-69f24a4dd46e" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">r(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> için incelemeye başlarsak:</li></ul><figure id="08b6cb42-bce8-4873-88c3-149a3dcebf6a" class="image"><a href="Lecture%2011%20b3c76/Untitled%2043.png"><img style="width:331px" src="Lecture%2011%20b3c76/Untitled%2043.png"/></a></figure><ul id="8f94e752-a272-42d5-a091-630f537cd173" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">r(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> fonksiyonu gelen işarete gürültü eklendikten sonra alıcı süzgeçteki transfer fonksiyonun çarpımı sonucu elde edilen fonksiyondur.<ul id="c3a96cb5-115b-458b-8953-2f196418cae0" class="bulleted-list"><li style="list-style-type:circle">Bu soruda gürültü olmadığı için direkt olarak gönderilen işaret ile alıcı süzgeçin konvolüsyonu olacaktır.</li></ul></li></ul><p id="a2d2152a-7036-4d1d-8e77-2e31ef613cc6" class="">
+</p><figure id="34ff67e3-8818-4231-bbd3-ece6674b70ef" class="image"><a href="Lecture%2011%20b3c76/Untitled%2044.png"><img style="width:656px" src="Lecture%2011%20b3c76/Untitled%2044.png"/></a></figure><ul id="1233484a-9d33-4d74-bb79-72f50debc633" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">r(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>&#x27;yi tek tek çizdikten sonra toplam hali üzerine bir daha çizildi.</li></ul><p id="38e153c9-f94a-4b8d-9e7a-7ae4e9027a6b" class="">
+</p><h3 id="1c134061-d9b9-434a-b9bc-59bb992e3fba" class="">e)</h3><figure id="f007cab5-7150-4b2c-9926-5a1198e4635d" class="image"><a href="Lecture%2011%20b3c76/Untitled%2045.png"><img style="width:891px" src="Lecture%2011%20b3c76/Untitled%2045.png"/></a></figure><figure id="2dda5cbb-c54d-4a0b-8ee2-b6bcc99ebcb8" class="image"><a href="Lecture%2011%20b3c76/Untitled%2046.png"><img style="width:781px" src="Lecture%2011%20b3c76/Untitled%2046.png"/></a></figure><ul id="1997d9d9-397e-438a-9a8b-55f926d968b0" class="bulleted-list"><li style="list-style-type:disc">E_b&#x27;yi hesaplamıştık.</li></ul><p id="5d26a910-d23e-4a35-8c14-58117f8693c1" class="">
+</p><figure id="5dc52a33-111b-4ca8-92f2-53cd7396903d" class="image"><a href="Lecture%2011%20b3c76/Untitled%2047.png"><img style="width:654px" src="Lecture%2011%20b3c76/Untitled%2047.png"/></a></figure><ul id="3ed3e715-1ab0-4727-b204-13d039615ec9" class="bulleted-list"><li style="list-style-type:disc">her bir r(kT) anlarındaki noktalarımı işaretledik.</li></ul><p id="aabb1c5a-89ce-4902-b0b0-0ce87bf7b18a" class="">
+</p><figure id="ed6a78d5-8c9c-4c6b-bad0-6c0ad8418b86" class="image"><a href="Lecture%2011%20b3c76/Untitled%2048.png"><img style="width:654px" src="Lecture%2011%20b3c76/Untitled%2048.png"/></a></figure><ul id="eb4ac89b-c222-42bd-8e98-97eee2dfab66" class="bulleted-list"><li style="list-style-type:disc">ISI olmadığı grafikten okunabilse de matematiksel olarak yazımı daha doğru olacaktır.</li></ul><p id="90b13e7f-43c8-4886-b461-f61921673be2" class="">
+</p><h3 id="3a3b6d6a-9fd4-4951-82a8-da705228c1d2" class="">f) artık gürültü dahil oldu.</h3><figure id="cfe273c6-97b0-4560-9827-77eceace5d8a" class="image"><a href="Lecture%2011%20b3c76/Untitled%2049.png"><img style="width:823px" src="Lecture%2011%20b3c76/Untitled%2049.png"/></a></figure><p id="1ef309b0-d435-429f-b761-5c72b4cd1774" class="">
+</p><ul id="57a707d2-b1f5-4ce5-9529-9702a58adac9" class="bulleted-list"><li style="list-style-type:disc">alıcı süzge çıkışındaki gürültünün PDF&#x27;i:</li></ul><figure id="bbd6b104-2ba9-478c-ac41-b8588fa58532" class="image"><a href="Lecture%2011%20b3c76/Untitled%2050.png"><img style="width:283px" src="Lecture%2011%20b3c76/Untitled%2050.png"/></a></figure><p id="52975c5d-9a78-4996-a063-27c162f22c94" class="">
+</p><figure id="e6e472bd-9f9a-481c-a328-66ac8bfb4548" class="image"><a href="Lecture%2011%20b3c76/Untitled%2051.png"><img style="width:473px" src="Lecture%2011%20b3c76/Untitled%2051.png"/></a></figure><ul id="75a4a0f7-26ea-4ecd-9572-61a9b34e6b4e" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mrow><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>u</mi><mi>m</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\alpha_{optimum}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">pt</span><span class="mord mathnormal mtight">im</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>&#x27;lar tam orta değerlerde çıktı.???</li></ul><p id="5d05ccb9-b7dd-42d6-9d29-cc58e9b046d4" class="">
+</p><ul id="3f860c95-38b7-41d1-9849-2ccacc43bd1b" class="bulleted-list"><li style="list-style-type:disc">Gürültünün gücü (N) hesabı:</li></ul><figure id="5c3febcd-ce2a-4399-9f97-97fb551e2f51" class="image"><a href="Lecture%2011%20b3c76/Untitled%2052.png"><img style="width:150px" src="Lecture%2011%20b3c76/Untitled%2052.png"/></a></figure><ul id="ba558338-169f-4f52-917f-d363174f961b" class="bulleted-list"><li style="list-style-type:disc">Alıcı süzgeç <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_1(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>&#x27;ye uyumlu olduğu için gürültünün gücü hesabında <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>N</mi><mn>0</mn></msub><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">N_0/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/2</span></span></span></span></span><span>﻿</span></span> değerine ek olarak çarpım halde <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">E_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> gelir.</li></ul><p id="80403295-8b5a-43c4-89ef-4d2875458bb7" class="">
+</p><ul id="c7132b09-d9b9-44eb-aa4f-f6c196b386f6" class="bulleted-list"><li style="list-style-type:disc">Hata olasılığı:</li></ul><figure id="25a3caea-8089-4e23-b58d-7dc0de613f96" class="image"><a href="Lecture%2011%20b3c76/Untitled%2053.png"><img style="width:444px" src="Lecture%2011%20b3c76/Untitled%2053.png"/></a></figure><ul id="e2a99343-c640-48d2-ad10-0ebc4fad169e" class="bulleted-list"><li style="list-style-type:disc">Doğru çözülme olasılıkları üzerinden hata olasılığı hesaplanacaktır.</li></ul><figure id="818bc64e-0d7a-4adc-830a-cf9a928b4339" class="image"><a href="Lecture%2011%20b3c76/Untitled%2054.png"><img style="width:339px" src="Lecture%2011%20b3c76/Untitled%2054.png"/></a></figure><ul id="25ae9c7b-73b3-46d1-a99c-d8a4290783d2" class="bulleted-list"><li style="list-style-type:disc">Bu formülü de kullanırsak:</li></ul><figure id="8297711d-2fc5-4b0e-96e4-3c7ab1c49b06" class="image"><a href="Lecture%2011%20b3c76/Untitled%2055.png"><img style="width:866px" src="Lecture%2011%20b3c76/Untitled%2055.png"/></a></figure><ul id="4ffcd892-2447-4fba-b52e-c19decd27877" class="bulleted-list"><li style="list-style-type:disc">Bu doğru çözülme hesaplarını hesaplarken;<ul id="1894c3b7-cc71-4a40-8f30-9d4bc751ddb9" class="bulleted-list"><li style="list-style-type:circle">0&#x27;daki simetri özelliği nedeniyle,<ul id="65aba9b6-4111-4c87-8f3e-9a20281978fe" class="bulleted-list"><li style="list-style-type:square">V1&#x27;nin çözülme olasılığı V2&#x27;ye,</li></ul><ul id="f3388684-e70c-48e9-ac35-ba96eff699f6" class="bulleted-list"><li style="list-style-type:square">V0&#x27;ın çözülme olsalığı V3&#x27;e eşittir.</li></ul></li></ul></li></ul><p id="ed07eb4e-20d3-4804-b7f7-19d81675ce54" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="d59cc9b6-a65a-4a0f-a6f9-7896480142bd"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Bu integrallerdeki <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>E</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">2E_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> değeri <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mn>4</mn><msub><mi>E</mi><mi>b</mi></msub></mrow><mn>5</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{4E_b}{5}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.239191em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.894191em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.41586em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.05764em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span> değerine eşittir. Yani çizdiğim grafikle de uyumlu, hata yok.</div></figure><p id="e1e711ba-28bb-43f3-9365-8ab72f1c2388" class="">
+</p><figure id="be0c9074-2cac-4db1-a8cd-a7f40ae893ce" class="image"><a href="Lecture%2011%20b3c76/Untitled%2056.png"><img style="width:748px" src="Lecture%2011%20b3c76/Untitled%2056.png"/></a></figure><ul id="5cc10e88-827f-423a-9a2f-655cafa500b6" class="bulleted-list"><li style="list-style-type:disc">Meydana gelme olasılıkları eşit olduğu için <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac14</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span> gelmiştir.</li></ul><p id="d9937fb3-1bda-4c02-9526-9715c35c3ae5" class="">
+</p><figure id="248a21a5-1682-4473-8798-5a52d726e237" class="image"><a href="Lecture%2011%20b3c76/Untitled%2057.png"><img style="width:722px" src="Lecture%2011%20b3c76/Untitled%2057.png"/></a></figure><figure id="81b79149-fdef-4903-a0e7-70fcb1dfcaaa" class="image"><a href="Lecture%2011%20b3c76/Untitled%2058.png"><img style="width:530px" src="Lecture%2011%20b3c76/Untitled%2058.png"/></a></figure><p id="7674cd67-412c-4ec0-ac7c-9d9b81f1213f" class="">
+</p></div></article></body></html>

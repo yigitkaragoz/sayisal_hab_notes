@@ -1,0 +1,679 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lecture 12 (27.05.21) [BPSK, Farksal PSK(DPSK)]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b234ff80-6518-4c94-bc4a-ec039949619d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🕛</span></div><h1 class="page-title">Lecture 12 (27.05.21) [BPSK, Farksal PSK(DPSK)]</h1></header><div class="page-body"><nav id="c476b10c-8ec0-4bdd-88e2-4358c8566a1a" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f97fa1ef-cb0b-4755-a0a9-faf9002193fd">Uygulama</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#db4b180c-a317-49df-8bd8-1c5c03224a09">1.</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#82061c4b-a600-4f96-bce5-d4b3821893b8">a)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#49bbfeed-684d-47a2-9e4f-3b26e287588b">b)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c6e35d25-6bed-4273-a3eb-27839bf083e5">c)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a536413f-0593-4bc7-99dc-e38e360826e8">d)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ba9c4e84-575a-43fc-8ef7-c6d343669c32">DERS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d00e067e-f86c-4f5f-bc5b-f0ae5ea38e92">İkili Faz Kaydırmalı Anahtarlama (BPSK)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3eb7f014-441e-4927-9761-be15e502725d">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e552733e-a81c-46a8-ba25-aec79a334e54">Bandgenişliğini incelersek:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#757e3d2a-bc36-4669-b8ae-1078939f7229">Alıcıdaki durumu incelersek:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#acc44892-dd88-419d-821b-1fcc6945f595">Gürültünün gücü ve Hata Olasılığı:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#40566810-5e07-4742-8cf3-4f1b41eb3f87">Eğer olasıkların eşit ise, P0=P1:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#92884c82-2b5c-4883-8074-12dcd6937caf">İlişkili Alıcı Yapısı</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7085458d-07e6-48df-ace7-ed9d2bf60397">Farksal PSK (Differential PSK, DPSK)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8957d346-3462-44a4-a228-3a23973dbedc">Örnek:</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c1b86d5f-2dea-4546-b787-831a8f9189e2">Hata Olasılığı</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7515113a-2615-465b-899e-296d045c4ec0">Demodülatör</a></div></nav><h1 id="f97fa1ef-cb0b-4755-a0a9-faf9002193fd" class="">Uygulama</h1><h2 id="db4b180c-a317-49df-8bd8-1c5c03224a09" class="">1.</h2><figure id="2a882d83-89ca-4776-a3ac-62783ac5d0e2" class="image"><a href="Lecture%2012%20b234f/Untitled.png"><img style="width:636px" src="Lecture%2012%20b234f/Untitled.png"/></a></figure><h3 id="82061c4b-a600-4f96-bce5-d4b3821893b8" class="">a)</h3><figure id="ead38b97-f1e5-43ba-a7c7-1d3535db4ad6" class="image"><a href="Lecture%2012%20b234f/Untitled%201.png"><img style="width:570px" src="Lecture%2012%20b234f/Untitled%201.png"/></a></figure><ul id="0f92cb56-216e-4dbb-a7c5-4bb05ee6f3cb" class="bulleted-list"><li style="list-style-type:disc">İki farklı genlik türü olduğu için <em><span style="border-bottom:0.05em solid"><strong>BASK</strong></span></em> türlü modülasyon görülmektedir.</li></ul><p id="b07c007c-4499-4b82-aeef-9e86c43c161a" class="">
+</p><figure id="9c53bc52-3556-457d-9958-545bf5082cfb" class="image"><a href="Lecture%2012%20b234f/Untitled%202.png"><img style="width:617px" src="Lecture%2012%20b234f/Untitled%202.png"/></a></figure><ul id="8a88ea3f-a3ba-413c-bf8f-faa35565c823" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>c</mi></msub><mo>=</mo><mn>2</mn><mi mathvariant="normal">/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">f_c=2/T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2/</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span></span><span>﻿</span></span> verildiği için bir periyotta iki tane tepe olacak şekilde çizilmelidir.</li></ul><p id="999b1478-6159-4b79-b2c9-0ae5bce924c7" class="">
+</p><h3 id="49bbfeed-684d-47a2-9e4f-3b26e287588b" class="">b)</h3><figure id="a9ba3056-2c21-49e5-b053-5c70c20454ae" class="image"><a href="Lecture%2012%20b234f/Untitled%203.png"><img style="width:732px" src="Lecture%2012%20b234f/Untitled%203.png"/></a></figure><figure id="1be367c5-4c79-411c-afc5-098d50e81093" class="image"><a href="Lecture%2012%20b234f/Untitled%204.png"><img style="width:860px" src="Lecture%2012%20b234f/Untitled%204.png"/></a></figure><ul id="9170181d-1186-4a5e-a84f-23c082414a6c" class="bulleted-list"><li style="list-style-type:disc">Alıcı çizilmiş ve s_1(t)&#x27;ye uyumlu olan süzgeç çizilmiştir.</li></ul><p id="89d77fd1-a63d-4f98-aeac-9471302dc274" class="">
+</p><h3 id="c6e35d25-6bed-4273-a3eb-27839bf083e5" class="">c)</h3><figure id="2ef61468-678b-47b5-9e91-8cf7d57b1d1b" class="image"><a href="Lecture%2012%20b234f/Untitled%205.png"><img style="width:833px" src="Lecture%2012%20b234f/Untitled%205.png"/></a></figure><ul id="05bc60a9-e94a-45fb-939a-6aa2260adc6d" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mrow><mi>o</mi><mi>p</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>u</mi><mi>m</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\alpha_{optimum}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">pt</span><span class="mord mathnormal mtight">im</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> değerini bulmak için gürültüyü 0&#x27;a eşitleriz.<ul id="45bc015a-07f2-4774-bb6c-2e17724c38f9" class="bulleted-list"><li style="list-style-type:circle">Sonrasında ise s_i(t)&#x27;lerin iletildiği durumlar için süzgeç çıkışındaki durumlar incelenir.</li></ul></li></ul><p id="3e741767-aa1a-41c2-a09c-7865dde20118" class="">
+</p><figure id="b1f66a9c-80fc-4bcb-bf56-1e0f12e3d7ef" class="image"><a href="Lecture%2012%20b234f/Untitled%206.png"><img style="width:810px" src="Lecture%2012%20b234f/Untitled%206.png"/></a></figure><ul id="a31238b3-4b72-42d5-a0ad-0c87c7ce7b3a" class="bulleted-list"><li style="list-style-type:disc">Süzgeç s_1(t)&#x27;ye uyumlu olduğu için, s_1(t) iletildiği zaman uyumlu süzgeç çıkışında s_1(t)&#x27;nin enerjisi olan E_1 görülecektir.</li></ul><p id="6e7332f5-e71a-4319-9193-04760e3585c4" class="">
+</p><figure id="310b6631-7e9c-43e5-8493-4197393f3cc5" class="image"><a href="Lecture%2012%20b234f/Untitled%207.png"><img style="width:475px" src="Lecture%2012%20b234f/Untitled%207.png"/></a></figure><ul id="92334b19-7865-43cc-85c6-2e46552d6412" class="bulleted-list"><li style="list-style-type:disc">Sembol sayısı ve bit sayısı eşit olduğu için <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mi>s</mi></msub><mo>=</mo><msub><mi>E</mi><mi>b</mi></msub></mrow><annotation encoding="application/x-tex">E_s=E_b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>.</li></ul><p id="d8c9a93a-0bf4-4224-a551-f08bc66fb310" class="">
+</p><figure id="115387f0-bcab-4656-8b9b-a3556738c28e" class="image"><a href="Lecture%2012%20b234f/Untitled%208.png"><img style="width:918px" src="Lecture%2012%20b234f/Untitled%208.png"/></a></figure><ul id="1e727463-b5e2-495f-914f-60534af4865e" class="bulleted-list"><li style="list-style-type:disc">Olasılıkları aynı olduğu için <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mrow><mi>o</mi><mi>p</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\alpha_{opt}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">pt</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> tam ortada olacaktır.</li></ul><ul id="ceb5dec7-3b77-4f1a-8cc1-5fe6c6541b53" class="bulleted-list"><li style="list-style-type:disc">Ayrıca süzgeç s_1(t)&#x27;ye uyumlu olduğu için gürültünün enerjisinde de süzgeçin enerjisi olan E_1 olacaktır.<ul id="936a2d15-4110-43bb-a06a-11551e43f30d" class="bulleted-list"><li style="list-style-type:circle"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mfrac><msub><mi>N</mi><mn>0</mn></msub><mn>2</mn></mfrac><msub><mi>E</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">N=\frac{N_0}2E_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.233431em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8884309999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4101em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31731428571428577em;"><span style="top:-2.357em;margin-left:-0.10903em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>.</li></ul></li></ul><ul id="6ed80bc4-568a-4507-9225-23bf2df54ea5" class="bulleted-list"><li style="list-style-type:disc">Ardından gürültü gücü ve alpha bulunduktan sonra Pe&#x27;nin Q&#x27;lu fonksiyon hali de hesaplanabilir.<ul id="6472d7bc-3c1a-4638-9ee4-a23e4ddb1e58" class="bulleted-list"><li style="list-style-type:circle">Burda payda &quot;d&quot; uzaklığı, iki işaretin iletim enerjileri arasındaki farktır.</li></ul></li></ul><p id="ac9efa68-a86e-4863-8a44-e3945a1c3e5b" class="">
+</p><h3 id="a536413f-0593-4bc7-99dc-e38e360826e8" class="">d)</h3><figure id="9a090b02-dbdd-41a5-94f4-18cc78ff1d6f" class="image"><a href="Lecture%2012%20b234f/Untitled%209.png"><img style="width:540px" src="Lecture%2012%20b234f/Untitled%209.png"/></a></figure><figure id="0f62882a-d219-4dcf-9dfa-cd93f9116f50" class="image"><a href="Lecture%2012%20b234f/Untitled%2010.png"><img style="width:834px" src="Lecture%2012%20b234f/Untitled%2010.png"/></a></figure><ul id="52ecaad4-be5f-4508-a39d-b49cc8f654d0" class="bulleted-list"><li style="list-style-type:disc">Olasıklar değiştiği için alpha&#x27;nın pozisyonu da değişecektir.<ul id="3baeb4af-a866-4f62-9bc0-3d9e7538777a" class="bulleted-list"><li style="list-style-type:circle">Bu yüzden alpha, bilinen formüla ile hesaplanır.</li></ul></li></ul><p id="9eb1410e-0b64-4823-8a6d-56908c94d14b" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="265bdaf0-75e2-4386-bf1c-cc64ad79d189"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Gürültü Gauss değil de farklı bir şey olsaydı alpha için PDF&#x27;ler kullanılarak hesap yapılacaktı.</div></figure><figure id="22df52fd-b603-403c-8f4f-a84da770bfac" class="image"><a href="Lecture%2012%20b234f/Untitled%2011.png"><img style="width:189px" src="Lecture%2012%20b234f/Untitled%2011.png"/></a></figure><p id="ee4cbefd-9167-468f-a4ab-f5bc1405ba81" class="">
+</p><figure id="5427ad6c-d111-44f1-8db6-b7fe97ca668d" class="image"><a href="Lecture%2012%20b234f/Untitled%2012.png"><img style="width:683px" src="Lecture%2012%20b234f/Untitled%2012.png"/></a></figure><ul id="86374de1-d6ab-428d-a579-dc63232aa52d" class="bulleted-list"><li style="list-style-type:disc">Sadece bilinen alpha ve Pe formüllerinde bulduğumuz değerler yerine konularak sonuca gidildi.</li></ul><ul id="ac199924-45e3-4b25-82e7-ae2245413206" class="bulleted-list"><li style="list-style-type:disc">Pe&#x27;nin formülünde:<ul id="ef2f5022-5ea2-40f1-b265-a82fa7e4c621" class="bulleted-list"><li style="list-style-type:circle">[(s_0 iletildiğinde hata olma olasılığı)*(s_0 iletilme olasılığı)]</li></ul></li></ul><p id="97a0aa56-8db8-4f65-9a3f-22875bdaec44" class="">
+</p><h1 id="ba9c4e84-575a-43fc-8ef7-c6d343669c32" class="">DERS</h1><h2 id="d00e067e-f86c-4f5f-bc5b-f0ae5ea38e92" class="">İkili Faz Kaydırmalı Anahtarlama (BPSK)</h2><figure id="e4e70872-6bd6-487d-8d84-95c6333c2ecc" class="image"><a href="Lecture%2012%20b234f/Untitled%2013.png"><img style="width:910px" src="Lecture%2012%20b234f/Untitled%2013.png"/></a></figure><ul id="9158d08c-5995-495f-94a6-f325b69d1c81" class="bulleted-list"><li style="list-style-type:disc">İki ayrı osilatör aracılığıyla gerçekleşir.<ul id="a9a9b65f-e63e-4fb6-b198-8e205d56e81b" class="bulleted-list"><li style="list-style-type:circle">Bir işaret ve bir tane de aynı işaretin 180 derece fazı kaymış halde iki dalga oluşturulur.</li></ul></li></ul><p id="120fc898-3443-4b03-aee3-94d36b3aaf5f" class="">
+</p><ul id="ec7436e6-27f5-48d6-9cd6-070a9f538c57" class="bulleted-list"><li style="list-style-type:disc">&quot;0&quot; biti için s_0(t), &quot;1&quot; biti için s_1(t) gönderilmiştir.<ul id="80a4f521-71bc-4ce5-96a0-e0b8d062c312" class="bulleted-list"><li style="list-style-type:circle">s_1(t)&#x27;nin fazı 180 derece fazladır.</li></ul></li></ul><p id="19aa7c85-c540-4d1c-a608-eb5a81045920" class="">
+</p><h3 id="3eb7f014-441e-4927-9761-be15e502725d" class="">Örnek:</h3><figure id="5fb79df2-ed9e-4739-a944-3f9dda0091a1" class="image"><a href="Lecture%2012%20b234f/Untitled%2014.png"><img style="width:729px" src="Lecture%2012%20b234f/Untitled%2014.png"/></a></figure><ul id="57635339-0a88-429d-9fa3-c2f762d9464f" class="bulleted-list"><li style="list-style-type:disc">bu örnekte ise &quot;1&quot; için <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span></span><span>﻿</span></span> fazlı işaret, &quot;0&quot; biti için 0 fazlı işaret kullanılmıştır.</li></ul><ul id="1b351cf3-c56c-4f95-8aa2-532d708da20c" class="bulleted-list"><li style="list-style-type:disc">İletim için sadece faz kullanıldığından dolayı enerjileri eşit olacaktır.</li></ul><ul id="c2c9a14f-182e-4fdf-a45d-8befb4de84df" class="bulleted-list"><li style="list-style-type:disc">Ortalama simge enerjisi <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">E_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>&#x27;de bir işaretin enerjisine eşittir.</li></ul><ul id="8a4b9c0f-2e48-476d-90fa-ea93d262fdf6" class="bulleted-list"><li style="list-style-type:disc">Ortalama bit enerjisi de ortalama simge enerjisine eşittir.</li></ul><p id="fa8f4b37-6dba-4e7a-9a36-96c171b363dc" class="">
+</p><h3 id="e552733e-a81c-46a8-ba25-aec79a334e54" class="">Bandgenişliğini incelersek:</h3><figure id="4ad658f9-6a3a-4c7d-ab06-bce6a26f6b59" class="image"><a href="Lecture%2012%20b234f/Untitled%2015.png"><img style="width:362px" src="Lecture%2012%20b234f/Untitled%2015.png"/></a></figure><p id="c31103a0-edee-474c-b1a2-28bbfc59ad08" class="">
+</p><h3 id="757e3d2a-bc36-4669-b8ae-1078939f7229" class="">Alıcıdaki durumu incelersek:</h3><figure id="b80dab83-068e-4a8c-a700-c9cd6f559a69" class="image"><a href="Lecture%2012%20b234f/Untitled%2016.png"><img style="width:581px" src="Lecture%2012%20b234f/Untitled%2016.png"/></a></figure><figure id="83a9cd69-977e-424a-beda-1cdba913ce32" class="image"><a href="Lecture%2012%20b234f/Untitled%2017.png"><img style="width:878px" src="Lecture%2012%20b234f/Untitled%2017.png"/></a></figure><ul id="73ef30a9-497b-4f15-9459-7f5a1ead2495" class="bulleted-list"><li style="list-style-type:disc">bu işlemler ile karar devresi girişine gelen işaretlerin enerjisi bulundu.</li></ul><p id="6ad53c8c-cd3e-4429-8872-74130e6aa5f0" class="">
+</p><h3 id="acc44892-dd88-419d-821b-1fcc6945f595" class="">Gürültünün gücü ve Hata Olasılığı:</h3><figure id="6b132ca8-a0ac-4824-b16c-84a14428f1d5" class="image"><a href="Lecture%2012%20b234f/Untitled%2018.png"><img style="width:683px" src="Lecture%2012%20b234f/Untitled%2018.png"/></a></figure><p id="bdc43fb0-c93d-4414-a861-69137c792915" class="">
+</p><h3 id="40566810-5e07-4742-8cf3-4f1b41eb3f87" class="">Eğer olasıkların eşit ise, P0=P1:</h3><figure id="f915e47d-2f96-4621-8afa-2b32913a6c6b" class="image"><a href="Lecture%2012%20b234f/Untitled%2019.png"><img style="width:767px" src="Lecture%2012%20b234f/Untitled%2019.png"/></a></figure><p id="94105aac-346d-4d67-8b36-77baea5fa4bc" class="">
+</p><h3 id="92884c82-2b5c-4883-8074-12dcd6937caf" class="">İlişkili Alıcı Yapısı</h3><figure id="3e6b9580-a272-46f0-99e2-f1a05c5fe81d" class="image"><a href="Lecture%2012%20b234f/Untitled%2020.png"><img style="width:542px" src="Lecture%2012%20b234f/Untitled%2020.png"/></a></figure><ul id="dda6502a-ba9c-4b27-b97d-dc362c9922f4" class="bulleted-list"><li style="list-style-type:disc">BPSK&#x27;nın klasik eşzamanlı olmayan alıcısı yok.<ul id="53748512-f870-468c-81ec-2e8bfc23b717" class="bulleted-list"><li style="list-style-type:circle">Bunun için DPSK yapısı kullanılır.</li></ul></li></ul><h2 id="7085458d-07e6-48df-ace7-ed9d2bf60397" class="">Farksal PSK (Differential PSK, DPSK)</h2><figure id="72c84b0f-f388-46da-9c1d-2161258efd09" class="image"><a href="Lecture%2012%20b234f/Untitled%2021.png"><img style="width:593px" src="Lecture%2012%20b234f/Untitled%2021.png"/></a></figure><ul id="e2d10210-daec-43ee-828b-2e0caf85ee95" class="bulleted-list"><li style="list-style-type:disc">BPSK yapısının önüne geri beslemeli bir yapı konur.</li></ul><ul id="03e474df-d325-45d5-b823-0cf318f8f23a" class="bulleted-list"><li style="list-style-type:disc">Bu şekilde alıcıların basit olmasına imkan tanınmıştır.</li></ul><ul id="6a082b81-4bdc-4ed4-9efe-d7816af5726f" class="bulleted-list"><li style="list-style-type:disc">~b(t)=b(t)*(~b(t)&#x27;nin önceki değeri)</li></ul><p id="7411333d-fec5-4149-85c0-4b43c1a2e31d" class="">
+</p><figure id="ad978eff-a461-4cb6-8de4-a8ba270df10e" class="image"><a href="Lecture%2012%20b234f/Untitled%2022.png"><img style="width:507px" src="Lecture%2012%20b234f/Untitled%2022.png"/></a></figure><figure id="380ef2ec-2657-4fb4-adc2-6dd85da72f0a" class="image"><a href="Lecture%2012%20b234f/Untitled%2023.png"><img style="width:540px" src="Lecture%2012%20b234f/Untitled%2023.png"/></a></figure><ul id="7936282c-bdb1-45b6-85e0-6ed8914a8cf8" class="bulleted-list"><li style="list-style-type:disc">r(T) burada AGS&#x27;den geçmiş olan y(t)*y(t-T)&#x27;dir.</li></ul><p id="49379dcb-c3b7-40ad-b033-45f96a9aa9de" class="">
+</p><figure id="b1c87d62-939e-41cb-940d-7e9bfad50d97" class="image"><a href="Lecture%2012%20b234f/Untitled%2024.png"><img style="width:371px" src="Lecture%2012%20b234f/Untitled%2024.png"/></a></figure><ul id="a33c2635-dd9d-4792-b383-ba079a542ada" class="bulleted-list"><li style="list-style-type:disc">Karar devresinin de mekaniği belirlenmiştir.</li></ul><p id="a26a6e4a-6011-43a6-9144-051753c6a944" class="">
+</p><h3 id="8957d346-3462-44a4-a228-3a23973dbedc" class="">Örnek:</h3><figure id="5569c6b1-5428-4e2a-93c3-71830d21ceb7" class="image"><a href="Lecture%2012%20b234f/Untitled%2025.png"><img style="width:781px" src="Lecture%2012%20b234f/Untitled%2025.png"/></a></figure><ul id="c1aab209-eb0d-44ee-a993-90b4f1049ba1" class="bulleted-list"><li style="list-style-type:disc">3. ve 5. satırın çarpımının sonucuna göre Karar devresi bir tahminde bulunacaktır.</li></ul><p id="b075e119-c418-4a08-84d7-18546db4c045" class="">
+</p><h3 id="c1b86d5f-2dea-4546-b787-831a8f9189e2" class="">Hata Olasılığı</h3><figure id="d513ddae-546b-4c22-a299-6907e4e0c14f" class="image"><a href="Lecture%2012%20b234f/Untitled%2026.png"><img style="width:677px" src="Lecture%2012%20b234f/Untitled%2026.png"/></a></figure><p id="c23f9bce-3952-4de2-82a8-67dfba9c5b7d" class="">
+</p><h3 id="7515113a-2615-465b-899e-296d045c4ec0" class="">Demodülatör</h3><figure id="f69bd491-e017-46d1-aab2-a619a5fda73f" class="image"><a href="Lecture%2012%20b234f/Untitled%2027.png"><img style="width:899px" src="Lecture%2012%20b234f/Untitled%2027.png"/></a></figure><ul id="e83badbf-4225-4129-8c87-6b744a3fd14c" class="bulleted-list"><li style="list-style-type:disc">DPSK için optimum demodülatör bu şekilde çizilmiştir.</li></ul></div></article></body></html>

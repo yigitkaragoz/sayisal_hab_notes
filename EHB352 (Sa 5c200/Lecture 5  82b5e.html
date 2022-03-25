@@ -1,0 +1,698 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lecture 5 (01.04.21) [Düzgün Olmayan Kuantalama, Parçalı Sıkıştırma, PCM Alıcısı]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="82b5e511-e656-4996-ad3c-7bca1059af45" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">5️⃣</span></div><h1 class="page-title">Lecture 5 (01.04.21) [Düzgün Olmayan Kuantalama, Parçalı Sıkıştırma, PCM Alıcısı]</h1></header><div class="page-body"><nav id="9cf68fe2-cce8-497b-b053-0aa6a6ee54ce" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2e361ef3-0e30-47de-95e3-ec39f913eec3">Düzgün Olmayan Kuantalama</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4254c8cd-2812-455b-adb5-29c9e99d72e7">Düzgün Olmayan Kuantalama Blok Diyagramı</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#93cfb5c8-a15f-4e06-b076-f5f9edfe17c7">Sıkıştırma Türleri</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#00f3c497-fc2c-4105-84b6-3a8f34ff053a">N-Tipi Sıkıştırma</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#305f9983-cd29-48f9-98ab-7733a784b126">A-Tipi Sıkıştırma</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3d559669-3ace-421a-9cbb-74a447795bc7">Parçalı Sıkıştırma (Segmented Compressing)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bbd95f9a-61e5-4e6b-ad90-9960ffe3c78f">PCM&#x27;e dönüş</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6261ec30-9c94-49b8-8137-f8b1bc9447f0">PCM Alıcısı</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7ad26039-6c86-4d4c-9d4d-430dab74949d">PCM Band Genişliği</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4fa9ce0e-42e4-412e-a7a0-e86811473748">PCM-TDM Hiyerarşik Yapı</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#11f610a0-708e-4c7d-9708-51e68eae4818">Hat Kodlama</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#128aecfe-0739-4c5b-b8c3-c5c886ef32dd">Uygulama</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#78a0d488-6fbd-4e97-90d0-3c9566d04b88">1.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1a020180-0336-4323-a783-4bf8447b5847">2. (2.55.30)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#45eddc56-9e3b-4236-bb19-222cad7bf2aa">İşaret Gücü Hesabı</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#54272ff9-5b03-4be8-8cf1-045a8114f3db">SNR Hesabı</a></div></nav><h1 id="2e361ef3-0e30-47de-95e3-ec39f913eec3" class="">Düzgün Olmayan Kuantalama</h1><ul id="3c5dbfe1-af63-4988-958d-32d0c624acab" class="bulleted-list"><li style="list-style-type:disc">Kuantalama işleminde kuantalama düzey aralıkları eşit değilse düzgün olmayan kuantalama denir.</li></ul><p id="797dce4c-b9c3-46f7-8bab-a009a94dafeb" class="">
+</p><figure id="1c19c7a1-4bf9-423d-8567-e9a41f6b8fd9" class="image"><a href="Lecture%205%20%2082b5e/Untitled.png"><img style="width:384px" src="Lecture%205%20%2082b5e/Untitled.png"/></a></figure><ul id="5ac1a686-9ea4-47b5-a4aa-c503e2d56c9e" class="bulleted-list"><li style="list-style-type:disc">Düzgün Kuantalama örneği.<ul id="c356292c-1e9c-403e-8771-166d857fc886" class="bulleted-list"><li style="list-style-type:circle">Bu örnekte x(t)&#x27;de küçük değişimler kuantalama sonucunda gözükmeyecektir.</li></ul><ul id="d0672dbe-4f01-4393-96b6-c64f9ffb4493" class="bulleted-list"><li style="list-style-type:circle">Bundan dolayı aralıkları eşit olmayacak ama daha net sonuç verecek şekilde seçebiliriz:<figure id="7c03d62c-1a4c-460c-accd-c3c23df3c76c" class="image"><a href="Lecture%205%20%2082b5e/Untitled%201.png"><img style="width:480px" src="Lecture%205%20%2082b5e/Untitled%201.png"/></a></figure></li></ul></li></ul><p id="756fd244-a185-4ee1-89e4-87872f26519d" class="">
+</p><figure id="1324dd3c-da18-4b25-a3a4-264145759835" class="image"><a href="Lecture%205%20%2082b5e/Untitled%202.png"><img style="width:240px" src="Lecture%205%20%2082b5e/Untitled%202.png"/></a></figure><ul id="caf29afd-494b-4ed5-8930-fe59e68416df" class="bulleted-list"><li style="list-style-type:disc">Düzgün olmayan kuantalama işleminde yoğun bölgelerde &quot;a&quot; azaltılarak o bölgeye ilişkin kuantalama gürültüsü azaltılarak SNR arttırılmıştır.</li></ul><p id="06335ef2-084c-4d0a-9c0d-ce0341db3035" class="">
+</p><figure id="271f7ca5-3441-4160-895a-343fd1a49893" class="image"><a href="Lecture%205%20%2082b5e/Untitled%203.png"><img style="width:336px" src="Lecture%205%20%2082b5e/Untitled%203.png"/></a><figcaption>PDF fonksiyonu.</figcaption></figure><ul id="30451513-763c-4c16-bb53-fc53d93f6168" class="bulleted-list"><li style="list-style-type:disc">b1 ve b2 aralığında olma olasılığı, c1 ve c2 arasında olma olasılığından fazladır.<ul id="669f2ca5-d179-40e4-bd77-3384a19b33b7" class="bulleted-list"><li style="list-style-type:circle">Çünkü alan daha büyük.</li></ul></li></ul><p id="855ebdcb-b56f-4706-8ea0-326798f31fb2" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="d41b9fd7-b0fb-4fef-b6c9-82ed5a1319e9"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Kuantalama miktarı artarsa, iletimde kullanılan bit sayısı artacaktır.</div></figure><ul id="2f198db9-14d1-4b77-ba1b-165c70f816d8" class="bulleted-list"><li style="list-style-type:disc">Bu durumdan ötürü çok sayıda düzeye sahip düzgün kuantalama yerine, az sayıda düzeyli düzgün olmayan kuantalama tercih edilir.</li></ul><hr id="63641a6a-5e4e-4371-8d92-f9beef946322"/><h2 id="4254c8cd-2812-455b-adb5-29c9e99d72e7" class="">Düzgün Olmayan Kuantalama Blok Diyagramı</h2><figure id="cc67487b-2277-46a6-9c29-43d1f2b55ac0" class="image"><a href="Lecture%205%20%2082b5e/Untitled%204.png"><img style="width:831px" src="Lecture%205%20%2082b5e/Untitled%204.png"/></a></figure><ul id="4b640b7f-c940-45c5-ace8-1df005a62cb2" class="bulleted-list"><li style="list-style-type:disc">Sıkıştırıcı yüksek genlik değerlerini daha düşük genlik değerlerine düşürme işlemini gerçekleştiren bloktur.</li></ul><p id="13fe2692-8fe8-48e7-80fc-02c0d7c49cfc" class="">
+</p><figure id="073765b4-0961-4cd5-b3fa-deebce9ae862" class="image"><a href="Lecture%205%20%2082b5e/Untitled%205.png"><img style="width:528px" src="Lecture%205%20%2082b5e/Untitled%205.png"/></a></figure><ul id="efd6d7a2-1dc3-4e4d-9bb8-2990257b1de6" class="bulleted-list"><li style="list-style-type:disc">Vericideki sıkıştırıcının tam hali ve alıcıdaki genişletici fonksiyonu.<ul id="5a3dbb1a-d7df-4569-9bad-3ffd0d80f6b8" class="bulleted-list"><li style="list-style-type:circle">Bu iki işleme bir arada &quot;Companding&quot; denmiştir.</li></ul></li></ul><p id="78d05125-3a39-4fd9-a806-4a1f5563b36a" class="">
+</p><h2 id="93cfb5c8-a15f-4e06-b076-f5f9edfe17c7" class="">Sıkıştırma Türleri</h2><ul id="a5813b96-8085-49b5-840f-7f2adc8e9619" class="bulleted-list"><li style="list-style-type:disc">Dünyada kabul gören 2 ana sıkıştırma standartı vardır: ITU-T (CCITT) standartları</li></ul><p id="7a7c5c35-2a0a-42d1-ba85-7f6eaca11288" class="">
+</p><h3 id="00f3c497-fc2c-4105-84b6-3a8f34ff053a" class="">N-Tipi Sıkıştırma</h3><figure id="dfe99017-818b-4348-9e3a-0f5cdd72e571" class="image"><a href="Lecture%205%20%2082b5e/Untitled%206.png"><img style="width:576px" src="Lecture%205%20%2082b5e/Untitled%206.png"/></a></figure><ul id="d0c7415a-a884-42a3-af9e-d928e1304965" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><mn>255</mn></mrow><annotation encoding="application/x-tex">\mu=255</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">μ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">255</span></span></span></span></span><span>﻿</span></span>, standart olan değerdir.</li></ul><ul id="667a0e0d-5506-489a-a211-ad0ad79c178e" class="bulleted-list"><li style="list-style-type:disc">Standartlar oluşturulurken o bölgenin ses profilleri de dikkate alınmaktadır.</li></ul><h3 id="305f9983-cd29-48f9-98ab-7733a784b126" class="">A-Tipi Sıkıştırma</h3><figure id="f355ca28-404f-4862-bede-02e6cb367169" class="image"><a href="Lecture%205%20%2082b5e/Untitled%207.png"><img style="width:886px" src="Lecture%205%20%2082b5e/Untitled%207.png"/></a></figure><ul id="e6d954e4-cb41-4f4f-bf51-6e0a4b842f62" class="bulleted-list"><li style="list-style-type:disc">Sinyal bir noktaya kadar linear geldikten sonra kıvrılarak devam eder.</li></ul><p id="5aab9188-dc77-4a1d-9a9b-3f2cdec8aabf" class="">
+</p><h3 id="3d559669-3ace-421a-9cbb-74a447795bc7" class="">Parçalı Sıkıştırma (Segmented Compressing)</h3><figure id="52ac98f4-20bb-404e-b99d-b84954a367a1" class="image"><a href="Lecture%205%20%2082b5e/Untitled%208.png"><img style="width:892px" src="Lecture%205%20%2082b5e/Untitled%208.png"/></a></figure><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="2f9b4803-2317-4e79-9e46-ffc2978c0eaa"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Parçalı Sıkıştırıcı üzerinde değerler normalize değerlerdir. (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>x</mi><mi mathvariant="normal">∣</mi></mrow><msub><mi>x</mi><mrow><mi>m</mi><mi>a</mi><mi>k</mi><mi>s</mi></mrow></msub></mfrac></mrow><annotation encoding="application/x-tex">\frac{|x|}{x_{maks}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.4608599999999998em;vertical-align:-0.4508599999999999em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">mak</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∣</span><span class="mord mathnormal mtight">x</span><span class="mord mtight">∣</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4508599999999999em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span>)
+- x_maks burda mutlak değerce en büyük değerdir.</div></figure><ul id="f25576fd-67e7-41d5-8562-179ef7cd6a9d" class="bulleted-list"><li style="list-style-type:disc">Bu şekilde girişi eşit aralıklarda olmayan 8 bölmeye ayrılmıştır.</li></ul><ul id="782fb145-21e1-4e18-9901-dbda360bd0af" class="bulleted-list"><li style="list-style-type:disc">Dikey eksen ise eşit aralıklara bölünmüştür.<ul id="c6ab0316-aaf9-4b7e-8f5b-974ff0deab83" class="bulleted-list"><li style="list-style-type:circle">Dikey eksende her bir aralık (mesela 7/8 ile 6/8 arası) ayrıca 16 alt bölgeye daha bölünmüştür.</li></ul></li></ul><p id="f59d44f5-5c48-4399-801e-65b841ce720a" class="">
+</p><ul id="6d5c2a92-949c-40b3-832e-2d8d4211949b" class="bulleted-list"><li style="list-style-type:disc">Bu durumda <span style="border-bottom:0.05em solid">3 bit</span> ile hangi giriş bölgesinde olduğu, <span style="border-bottom:0.05em solid">4 bit</span> ile de dikey eksende nerde olduğu belirlenir.<ul id="b1952881-1ea4-40ce-ae2f-b6050ad74434" class="bulleted-list"><li style="list-style-type:circle">Geriye kalan son bit ise işaretten gelir.<ul id="4c4d5fa8-f63d-4efd-b705-2d45c4203c51" class="bulleted-list"><li style="list-style-type:square">Negatif mi Pozitif mi olduğuna bağlı olarak.</li></ul></li></ul></li></ul><p id="fe57c860-b001-4145-a425-7f48ffd59ae4" class="">
+</p><figure id="f113f614-8bd3-428e-a93e-e556f5140649" class="image"><a href="Lecture%205%20%2082b5e/Untitled%209.png"><img style="width:576px" src="Lecture%205%20%2082b5e/Untitled%209.png"/></a></figure><figure id="dce089f4-9f42-40a2-b2db-1fda8bfca789" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2010.png"><img style="width:480px" src="Lecture%205%20%2082b5e/Untitled%2010.png"/></a></figure><ul id="add66cd3-56bf-4139-b8cd-41182fa4d029" class="bulleted-list"><li style="list-style-type:disc">Alıcıda bu işlem şu şekilde gerçekleşir:<ul id="6a4f83c4-1c7f-4759-b494-f3dc420304b5" class="bulleted-list"><li style="list-style-type:circle">En baştaki &quot;1&quot; işaretin pozitif olduğunu söyler.</li></ul><ul id="b4a4055f-3340-408c-8e22-8fdefd9abe8e" class="bulleted-list"><li style="list-style-type:circle">Sonraki &quot;110&quot; sıkıştırmada 1/4 ile 1/8 arasında olduğunu söyler.</li></ul><ul id="e0ec405f-eb1b-4c79-8474-43b5d8264e15" class="bulleted-list"><li style="list-style-type:circle">Sonraki &quot;1100&quot; ise 1/4 ile 1/8 arasının denk geldiği 6/8 ile 7/8 dikey aralığındaki 16 alt aralıkta nereye denk geldiğini belirler.</li></ul></li></ul><p id="21a3794c-92f8-45ab-af62-907826d043e9" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="88db673d-4b21-4e80-92ec-796a42803c06"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Parçalı sıkıştırma işleminde:
+- Hem sıkıştırma,
+- Hem kuantalama,
+- Hem kodlama yapılmaktadır.</div></figure><p id="fd2f8895-aeec-4faa-9dc8-a4077f2799f8" class="">
+</p><figure id="e122c875-5f75-4be8-96c7-dc7d13fa4b2d" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2011.png"><img style="width:672px" src="Lecture%205%20%2082b5e/Untitled%2011.png"/></a></figure><ul id="e941d785-4b1d-4c17-b34b-c6ecfa3f7045" class="bulleted-list"><li style="list-style-type:disc">Bu işlemin tersinde tam olarak aynı değere ulaşılmayabilir.</li></ul><p id="e9cc3849-688e-44d7-90a4-ddcbe15165c9" class="">
+</p><figure id="63537f6a-b8e4-4260-be8f-e57f5b3fd908" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2012.png"><img style="width:325px" src="Lecture%205%20%2082b5e/Untitled%2012.png"/></a></figure><ul id="20b52c79-01af-4351-b2e9-a9f705d9d153" class="bulleted-list"><li style="list-style-type:disc">7.bölgede negatiften başlayıp pozitife giden linear bir doğru olduğundan tek bir bölge olarak kabul edilir.</li></ul><p id="6d54e307-3e43-4ba8-82ae-5e125fcf014f" class="">
+</p><h1 id="bbd95f9a-61e5-4e6b-ad90-9960ffe3c78f" class="">PCM&#x27;e dönüş</h1><h2 id="6261ec30-9c94-49b8-8137-f8b1bc9447f0" class="">PCM Alıcısı</h2><figure id="5177536b-9dc1-4229-9876-419eafad5eda" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2013.png"><img style="width:895px" src="Lecture%205%20%2082b5e/Untitled%2013.png"/></a></figure><ul id="fb011e08-f876-4c27-b0c0-9095a6ffe1b3" class="bulleted-list"><li style="list-style-type:disc">Siyah ile çizilen işaret vericiden gönderilen işarettir.</li></ul><ul id="981316fb-fb56-4cd0-b5f5-c3e87361c5af" class="bulleted-list"><li style="list-style-type:disc">Mavi olan işaretten sezici bir karar verir.<ul id="7d4b06d3-9187-4abc-94c3-33db45fff7bd" class="bulleted-list"><li style="list-style-type:circle">ilk işarette 1011 dizisi sezilir.</li></ul></li></ul><p id="e1dbdedb-6351-49fb-8ebf-a0d89e831358" class="">
+</p><figure id="951234ce-c144-49d5-b789-7025fd712e2e" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2014.png"><img style="width:366px" src="Lecture%205%20%2082b5e/Untitled%2014.png"/></a></figure><ul id="6b003593-8894-47d0-93db-054bc01e0dbc" class="bulleted-list"><li style="list-style-type:disc">Ama kodu daha çok bozan bir gürültü gelirse sezici diziyi yanlış bulabilir.</li></ul><p id="4f74b803-f976-49f5-9855-07b121b6ff8d" class="">
+</p><figure id="ace15953-5f5c-43d4-9bf6-79e3dd99e67f" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2015.png"><img style="width:411px" src="Lecture%205%20%2082b5e/Untitled%2015.png"/></a></figure><ul id="fe14d994-f58c-4a35-9662-abdac5ac41e9" class="bulleted-list"><li style="list-style-type:disc">Vericide sıkıştırıcı ve kodlayacı ile oluşturulmuş değerler burada tekrardan darbelere çevrilir.</li></ul><p id="4d09884f-7161-4298-b6f5-412e1bae53c1" class="">
+</p><figure id="4ee63717-9221-4095-ab85-6d1da8e7b7ac" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2016.png"><img style="width:473px" src="Lecture%205%20%2082b5e/Untitled%2016.png"/></a></figure><p id="25d68209-a972-4cb6-847a-76eae6652fa5" class="">
+</p><h2 id="7ad26039-6c86-4d4c-9d4d-430dab74949d" class="">PCM Band Genişliği</h2><figure id="dd3cb8c6-0816-4190-83af-de67a424c0b1" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2017.png"><img style="width:384px" src="Lecture%205%20%2082b5e/Untitled%2017.png"/></a></figure><ul id="7f935b73-6aa8-47d3-ad26-635f2d7e86fe" class="bulleted-list"><li style="list-style-type:disc">1 örnek 8 bitle kodlandıysa, bu örnek için 8 darbe gönderilecektir.</li></ul><p id="6e1a66d4-054b-48dc-b898-307ae0d4da7b" class="">
+</p><figure id="5937c863-209a-4e43-b37f-8f6a7bb16824" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2018.png"><img style="width:336px" src="Lecture%205%20%2082b5e/Untitled%2018.png"/></a></figure><ul id="5ab759d5-bd92-43e1-b41f-01c1e1fb50b8" class="bulleted-list"><li style="list-style-type:disc">Bu darbenin zamanda yayılmış biçimi bu şekildedir.</li></ul><ul id="c4b8f4cb-a3dd-45cf-8773-2451641a52bd" class="bulleted-list"><li style="list-style-type:disc">Bir darbenin genişliği <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\tau_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>&#x27;dır.</li></ul><p id="5319a247-a2ab-4c11-8f47-0bf4c0d0a422" class="">
+</p><figure id="89fcc089-8e8d-44dd-a4f1-87d7e8dfe6eb" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2019.png"><img style="width:384px" src="Lecture%205%20%2082b5e/Untitled%2019.png"/></a></figure><figure id="1ceb21d5-bfd8-4031-9a6e-bb67ac04bad2" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2020.png"><img style="width:432px" src="Lecture%205%20%2082b5e/Untitled%2020.png"/></a></figure><ul id="e20b309e-e310-4476-a19a-bddd0f1f1efd" class="bulleted-list"><li style="list-style-type:disc">PCM için gerekli olan iletim band genişliği <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo></mrow><annotation encoding="application/x-tex">\geq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≥</span></span></span></span></span><span>﻿</span></span> n*(bilgi işaretinin band genişliği)<ul id="56d587ef-c230-4c2a-b5ba-de2e9f8ea517" class="bulleted-list"><li style="list-style-type:circle">Gönderilen bir sayısının katı kadar band genişliğine ihtiyaç olur.</li></ul><ul id="a849d76d-d6ca-440f-a1e5-cfe4b3c60eb6" class="bulleted-list"><li style="list-style-type:circle">W → bilgi işaretinin band genişliği.</li></ul></li></ul><p id="2ed553d9-01b8-4bab-8437-d78e967edc72" class="">
+</p><h2 id="4fa9ce0e-42e4-412e-a7a0-e86811473748" class="">PCM-TDM Hiyerarşik Yapı</h2><figure id="1b3269bc-b804-4755-8881-bac3143d01fe" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2021.png"><img style="width:576px" src="Lecture%205%20%2082b5e/Untitled%2021.png"/></a></figure><ul id="21c464fe-b68b-4ce1-b52c-1ff41fd65f1b" class="bulleted-list"><li style="list-style-type:disc">Sisteme katılan işaret türleri aynı olmak zorunda değil.</li></ul><p id="f114493b-ba07-455d-8a25-57308b8b0d37" class="">
+</p><h2 id="11f610a0-708e-4c7d-9708-51e68eae4818" class="">Hat Kodlama</h2><figure id="104770bc-f720-4f4c-93d3-73147db67201" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2022.png"><img style="width:456px" src="Lecture%205%20%2082b5e/Untitled%2022.png"/></a></figure><ul id="6cf859e7-51f5-456e-9f5a-52ad628853a2" class="bulleted-list"><li style="list-style-type:disc">Hat Kodlama vericide yapılır.</li></ul><p id="934c6956-e946-4c37-816f-3001dbf6d873" class="">
+</p><h1 id="128aecfe-0739-4c5b-b8c3-c5c886ef32dd" class="">Uygulama</h1><h2 id="78a0d488-6fbd-4e97-90d0-3c9566d04b88" class="">1.</h2><figure id="06098b05-5452-4a60-a14d-3ad95c919dc0" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2023.png"><img style="width:836px" src="Lecture%205%20%2082b5e/Untitled%2023.png"/></a></figure><figure id="39dbaea4-7690-4b66-9adb-a7812e9cfc50" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2024.png"><img style="width:336px" src="Lecture%205%20%2082b5e/Untitled%2024.png"/></a></figure><p id="7c6dfa63-160c-448f-82cd-5cb81244295a" class="">
+</p><div id="7872435f-068d-43bd-b301-629362afb7ea" class="column-list"><div id="568e41ba-9fe2-4278-b63e-c7cf08b68bd7" style="width:50%" class="column"><figure id="c684d571-b172-46dc-8bb9-a813aaad7610" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2025.png"><img style="width:432px" src="Lecture%205%20%2082b5e/Untitled%2025.png"/></a></figure><ul id="bbad5350-f308-4ee7-ab85-b4528816651a" class="bulleted-list"><li style="list-style-type:disc">&quot;Küçük a&quot; kuantalama aralığıdır.</li></ul></div><div id="1c807564-5037-46d5-a655-a656bfc134d6" style="width:50%" class="column"><figure id="bd3d7254-016f-4bfe-87ff-0b63c17d3687" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2026.png"><img style="width:288px" src="Lecture%205%20%2082b5e/Untitled%2026.png"/></a></figure></div></div><ul id="bab77e3f-7e1b-4f3c-8ad6-140f1e9f385c" class="bulleted-list"><li style="list-style-type:disc">Sinusiodal bir işaretin A_max-A_min değeri genliğinin 2 katına eşit olacaktır.</li></ul><p id="10266509-a6c2-4dde-bf0d-384b9fc7d356" class="">
+</p><p id="e671dc99-bdeb-4dbe-a3e1-bcd4ad02eb57" class="">
+</p><figure id="5e0a45ac-b9f8-42d7-b182-8ad20a6147e1" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2027.png"><img style="width:534px" src="Lecture%205%20%2082b5e/Untitled%2027.png"/></a></figure><ul id="17979957-f348-4411-af34-a662b78d604a" class="bulleted-list"><li style="list-style-type:disc">Sinyalin gücü: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="02dce053-bc5d-4094-92a2-c051928fab37" class="bulleted-list"><li style="list-style-type:disc">Kuantalama Gürültüsü: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>N</mi><mi>q</mi></msub></mrow><annotation encoding="application/x-tex">N_q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul><p id="61c3d170-b969-4602-88aa-0fa29dd440f1" class="">
+</p><ul id="5fbcbc4e-a97f-4ee8-856a-813d1309ae0f" class="bulleted-list"><li style="list-style-type:disc">Decibel cinsinden hesaplarsak:</li></ul><figure id="8deec11d-a1b3-44fa-833a-c81dc5b8c5fa" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2028.png"><img style="width:576px" src="Lecture%205%20%2082b5e/Untitled%2028.png"/></a></figure><ul id="fe9d79f3-ceb0-4e3a-b4c9-72c09191ba3b" class="bulleted-list"><li style="list-style-type:disc">Hesaplama sonucunda yorumlama:</li></ul><figure id="bada87d3-b058-4973-9b4b-854bb6e55d91" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2029.png"><img style="width:232px" src="Lecture%205%20%2082b5e/Untitled%2029.png"/></a></figure><ul id="3b9e53a4-7685-4278-9b9a-e64ac789d732" class="bulleted-list"><li style="list-style-type:disc">A2 arttıkça, sinyal ile kuantalamacı arasındaki aralık artığı için oran düşer.</li></ul><p id="2db25191-9257-4da4-a270-fe85abcce05a" class="">
+</p><h2 id="1a020180-0336-4323-a783-4bf8447b5847" class="">2. (2.55.30)</h2><figure id="b15da7b6-3125-4427-b689-091684a7f963" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2030.png"><img style="width:890px" src="Lecture%205%20%2082b5e/Untitled%2030.png"/></a></figure><ul id="71223622-8cfd-46b3-a4b9-0e872422f643" class="bulleted-list"><li style="list-style-type:disc">Kuantalama aralıkları: -4, -2, 0, +2, +4 idir.</li></ul><p id="da4fe51d-2b54-4b0f-a5a1-3c603d6eaeb0" class="">
+</p><figure id="de02a300-4096-4073-9407-81b1e9a73ee0" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2031.png"><img style="width:401px" src="Lecture%205%20%2082b5e/Untitled%2031.png"/></a></figure><figure id="26977c9a-317a-4917-b845-fb9af141755b" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2032.png"><img style="width:384px" src="Lecture%205%20%2082b5e/Untitled%2032.png"/></a></figure><ul id="af33709f-0c44-40c9-b9f8-4d19dfd1f78b" class="bulleted-list"><li style="list-style-type:disc">-sonsuzdan sonsuza fonksiyonun (PDF) integrali bir olmalı.</li></ul><p id="aa777528-8c59-49de-aa9f-a66cb71dc7a5" class="">
+</p><figure id="db0c8b9e-a8c7-4ed4-b6cb-e3df23f93320" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2033.png"><img style="width:334px" src="Lecture%205%20%2082b5e/Untitled%2033.png"/></a></figure><p id="147c7ceb-e7e9-42a1-9753-745ed605c89e" class="">
+</p><ul id="50d3ce42-1050-4c4a-bcea-3035d96259fa" class="bulleted-list"><li style="list-style-type:disc">n_q sağda ve solda aynı olasılıkta değildir.<ul id="0583141e-2d90-43f5-b7bd-7e06572a9fae" class="bulleted-list"><li style="list-style-type:circle">Bu yüzden dikkat etmeliyiz.</li></ul></li></ul><p id="5f07d227-aa96-4c49-a17f-5777c88b3317" class="">
+</p><figure id="2db6bf53-c916-4164-bb34-fd2fe29e1173" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2034.png"><img style="width:484px" src="Lecture%205%20%2082b5e/Untitled%2034.png"/></a></figure><ul id="811aa6fe-4905-4401-a3dc-f137d3b1fbfe" class="bulleted-list"><li style="list-style-type:disc">Eğer x_q&#x27;nun PDF&#x27;i sabit ise n_q&#x27;nun PDF&#x27;i x&#x27;in PDF&#x27;ine eşit olacaktır.</li></ul><ul id="ce38c3e1-bafd-4d2f-8221-c8a274616df3" class="bulleted-list"><li style="list-style-type:disc">nq aralığı nerden geldi?? (a/2)<ul id="a1a5e7f9-3ee2-4af4-8493-44cb75aee1ee" class="bulleted-list"><li style="list-style-type:circle">Kuantalama Aralıklarının genişliğinden büyük olamaz.</li></ul></li></ul><p id="5e294289-f658-418c-a3e5-1210fbefc173" class="">
+</p><figure id="c2a07335-e23d-4ab1-83ac-8449b57b0152" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2035.png"><img style="width:737px" src="Lecture%205%20%2082b5e/Untitled%2035.png"/></a></figure><figure id="28d9eec4-53db-4fbc-9803-8c6d2574c8e0" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2036.png"><img style="width:766px" src="Lecture%205%20%2082b5e/Untitled%2036.png"/></a></figure><p id="131eeb18-34c3-4f51-9f96-c7ba14d2e28d" class="">
+</p><ul id="4dd2a999-3ab6-4a64-ab67-7605b84e012c" class="bulleted-list"><li style="list-style-type:disc">İntegrallerin çözümü için:</li></ul><figure id="35c96024-6a98-4ed5-862d-014e22494374" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2037.png"><img style="width:882px" src="Lecture%205%20%2082b5e/Untitled%2037.png"/></a></figure><ul id="097df660-ce91-44fc-a415-eb5f9ca81284" class="bulleted-list"><li style="list-style-type:disc">I&#x27;yi tekrar hesaplıyoruz.</li></ul><figure id="cdb13f20-ae0f-4057-94f3-7fcb8658a24c" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2038.png"><img style="width:552px" src="Lecture%205%20%2082b5e/Untitled%2038.png"/></a></figure><figure id="e975c93f-63df-42e7-9e26-e207f5f388e5" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2039.png"><img style="width:274px" src="Lecture%205%20%2082b5e/Untitled%2039.png"/></a></figure><ul id="58a1af4c-634b-4106-936a-6884d1d37d3c" class="bulleted-list"><li style="list-style-type:disc">Sonuç da böyle bulunur.</li></ul><figure id="b67348c1-d4fb-400b-accf-dfc962e2491d" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2040.png"><img style="width:384px" src="Lecture%205%20%2082b5e/Untitled%2040.png"/></a></figure><ul id="2f2a92cb-b6ed-4305-84e6-986670dc38e5" class="bulleted-list"><li style="list-style-type:disc">aynı zamanda e^-nq ifadesinin de integral sonucu aynı olduğu için N_q hesaplamalarımı 2 ile çarpıyorum.</li></ul><p id="8048bf4b-92d1-4d4a-8813-cd67a62a8069" class="">
+</p><ul id="9d411bf7-bea1-4772-900f-a98b2a71d39a" class="bulleted-list"><li style="list-style-type:disc">Şimdi yukarıdaki integrallerimizi hesaplamaya dönelim.</li></ul><figure id="c19b4366-4921-433e-a1e6-645c35e4b4d4" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2041.png"><img style="width:576px" src="Lecture%205%20%2082b5e/Untitled%2041.png"/></a></figure><p id="f1be54fc-ef43-4d54-bad5-9f374020cf93" class="">
+</p><h3 id="45eddc56-9e3b-4236-bb19-222cad7bf2aa" class="">İşaret Gücü Hesabı</h3><figure id="5893184b-4e7b-41c9-88c1-31c131cc2d43" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2042.png"><img style="width:428px" src="Lecture%205%20%2082b5e/Untitled%2042.png"/></a></figure><figure id="5c1eb2a9-1428-44cd-a86e-f3f975c3865f" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2043.png"><img style="width:892px" src="Lecture%205%20%2082b5e/Untitled%2043.png"/></a></figure><ul id="f8eadc3e-66ea-4af0-84fd-119cf46a04c9" class="bulleted-list"><li style="list-style-type:disc">(x_q değerinin olma olasılığı) * (x_q&#x27;nun karesi)</li></ul><h3 id="54272ff9-5b03-4be8-8cf1-045a8114f3db" class="">SNR Hesabı</h3><figure id="1ccdb431-1f15-44d0-be18-cb85179db482" class="image"><a href="Lecture%205%20%2082b5e/Untitled%2044.png"><img style="width:577px" src="Lecture%205%20%2082b5e/Untitled%2044.png"/></a></figure><ul id="da14a207-01ca-4a53-a35c-45bee48ccf9f" class="bulleted-list"><li style="list-style-type:disc">SNR=S_q/N_q</li></ul><p id="033cd5ba-1920-4963-a6d6-cd25dce6be25" class="">
+</p></div></article></body></html>
